@@ -23,6 +23,8 @@ public class Acesso {
 
     public void setId(int id) {
         this.id = id;
+        //gerador de id modelo 
+        //getId().stream().maptoint(getId()).max().orelse(0) + 1;
     }
 
     public Residente getResidente() {

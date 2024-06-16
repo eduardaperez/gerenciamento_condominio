@@ -12,5 +12,6 @@ public class ResidenteView {
     public void exibirListaResidentes(List<Residente> residentes) { /* implementação */ }
 
     // Outros métodos de visualização relacionados aos moradores
+    // metodo cadastrar, responsável por pegar os parâmetros
 }
 

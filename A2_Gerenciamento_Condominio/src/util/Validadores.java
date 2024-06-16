@@ -8,6 +8,12 @@ public abstract class Validadores {
         return cpf.length() == 11;
     }
 
+    public static boolean ValidaContato(String contato)
+    {
+        contato = contato.trim().replace("(", "").replace(")", "").replace("-", "");
+        return contato.length() == 11;
+    }
+
     public static boolean ValidaPlaca(String placa)
     {
         placa = placa.trim().replace("-", "");

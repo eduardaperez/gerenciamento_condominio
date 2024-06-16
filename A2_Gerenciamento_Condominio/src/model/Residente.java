@@ -1,50 +1,57 @@
 package model;
 
-public class Residente {
-    private int id; // Identificador único do residente
-    private String nome; // Nome do residente
-    private String endereco; // Endereço do residente no condomínio
-    private String contato; // Informações de contato do residente
-    private String documento; // Documento de identificação do residente (ex: RG, CPF)
-    //private List<Veiculo> veiculos; // Lista de veículos pertencentes ao residente
+import java.util.List;
 
-    public Residente(int id, String nome, String endereco, String contato, String documento) {
-        this.id = id;
-        this.nome = nome;
-        this.endereco = endereco;
-        this.contato = contato;
-        this.documento = documento;
+import javax.xml.crypto.Data;
+
+public class Residente extends Pessoa {
+    private int bloco, apartamento, vaga; // Endereço do residente no condomínio
+    private Data dataNascimento;
+    private List<Veiculo> veiculos; // Lista de veículos pertencentes ao residente
+
+    
+    public Residente(int id, String nome, String contato, int bloco, int apartamento, int vaga, Data dataNascimento,
+            List<Veiculo> veiculos) {
+        super(id, nome, contato);
+        this.bloco = bloco;
+        this.apartamento = apartamento;
+        this.vaga = vaga;
+        this.dataNascimento = dataNascimento;
+        this.veiculos = veiculos;
     }
-    public int getId() {
-        return id;
+    
+    public int getBloco() {
+        return bloco;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setBloco(int bloco) {
+        this.bloco = bloco;
     }
-    public String getNome() {
-        return nome;
+    public int getApartamento() {
+        return apartamento;
     }
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setApartamento(int apartamento) {
+        this.apartamento = apartamento;
     }
-    public String getEndereco() {
-        return endereco;
+    public int getVaga() {
+        return vaga;
     }
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setVaga(int vaga) {
+        this.vaga = vaga;
     }
-    public String getContato() {
-        return contato;
+    public Data getDataNascimento() {
+        return dataNascimento;
     }
-    public void setContato(String contato) {
-        this.contato = contato;
+    public void setDataNascimento(Data dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
-    public String getDocumento() {
-        return documento;
+    public List<Veiculo> getVeiculos() {
+        return veiculos;
     }
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setVeiculos(List<Veiculo> veiculos) {
+        this.veiculos = veiculos;
     }
+
+    
 
     
 }

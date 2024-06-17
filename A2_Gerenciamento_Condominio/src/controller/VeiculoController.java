@@ -30,7 +30,9 @@ public class VeiculoController {
     }
 
     public void atualizarVeiculo(Veiculo veiculo) {
-        // Implementar atualização se necessário
+        veiculo.setTipo(null);
+        veiculo.setPlaca(null);
+        veiculo.setModelo(null);
     }
 
     public void removerVeiculo(String placa) {

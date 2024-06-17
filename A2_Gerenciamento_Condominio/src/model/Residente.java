@@ -1,19 +1,22 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.List;
 
-import javax.xml.crypto.Data;
-
 public class Residente extends Pessoa {
+    private int bloco, apartamento, vaga;
+    private LocalDate dataNascimento;
     private String cpf;
-    private int bloco, apartamento, vaga; // Endereço do residente no condomínio
-    private Data dataNascimento;
-    private List<Veiculo> veiculos; // Lista de veículos pertencentes ao residente
+    private List<Veiculo> veiculos; 
 
     
-    public Residente(int id, String nome, String contato,String cpf, int bloco, int apartamento, int vaga, Data dataNascimento,
+    public Residente(String nome, String contato) {
+        super(nome, contato);
+    }
+
+    public Residente(String nome, String contato, String cpf, int bloco, int apartamento, int vaga, LocalDate dataNascimento,
             List<Veiculo> veiculos) {
-        super(id, nome, contato);
+        super(nome, contato);
         this.cpf = cpf;
         this.bloco = bloco;
         this.apartamento = apartamento;
@@ -21,7 +24,6 @@ public class Residente extends Pessoa {
         this.dataNascimento = dataNascimento;
         this.veiculos = veiculos;
     }
-    
 
     public String getCpf() {
         return cpf;
@@ -47,10 +49,10 @@ public class Residente extends Pessoa {
     public void setVaga(int vaga) {
         this.vaga = vaga;
     }
-    public Data getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
-    public void setDataNascimento(Data dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
     public List<Veiculo> getVeiculos() {

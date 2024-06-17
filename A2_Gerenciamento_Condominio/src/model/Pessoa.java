@@ -6,8 +6,7 @@ public abstract class Pessoa {
     private String contato;
 
     
-    public Pessoa(int id, String nome, String contato) {
-        this.id = id;
+    public Pessoa(String nome, String contato) {
         this.nome = nome;
         this.contato = contato;
     }

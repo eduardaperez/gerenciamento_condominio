@@ -4,7 +4,9 @@ public class Veiculo {
     private String placa, modelo, tipo;
     private Residente residente;
 
-    
+    public Veiculo() {
+    }
+
     public Veiculo(String placa, String modelo, String tipo, Residente residente) {
         this.placa = placa;
         this.modelo = modelo;
@@ -12,7 +14,6 @@ public class Veiculo {
         this.residente = residente;
     }
 
-    
     public String getPlaca() {
         return placa;
     }

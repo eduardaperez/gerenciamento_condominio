@@ -3,10 +3,18 @@ package view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import controller.AcessoController;
+import controller.EntregaController;
+import controller.PessoaController;
+import controller.RelatorioController;
+import controller.ReservaController;
+import controller.VeiculoController;
+
 public class ExibirMenu {
 
-    public static void exibirMenuPrincipal(Scanner scanner) {
+    public static void exibirMenuPrincipal(Scanner scanner, AcessoController acessoController, EntregaController entregaController, PessoaController pessoaController, RelatorioController relatorioController, ReservaController reservaController, VeiculoController veiculoController) {
         int opcao;
+
         do {
             System.out.println(); // Pula linha
             System.out.println("----- Menu -----");
@@ -32,7 +40,7 @@ public class ExibirMenu {
                         exibirMenuEntregas(scanner);
                         break;
                     case 3:
-                        exibirMenuCadastros(scanner);
+                        exibirMenuCadastros(scanner, pessoaController, veiculoController);
                         break;
                     case 4:
                         exibirMenuReservas(scanner);
@@ -117,12 +125,12 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirMenuCadastros(Scanner scanner) {
+    public static void exibirMenuCadastros(Scanner scanner, PessoaController pessoaController, VeiculoController veiculoController) {
         int opcao;
         do {
             System.out.println("\n--- Cadastros ---");
             System.out.println("1. Cadastro de Pessoa Física");
-            System.out.println("2. Cadastro de Veículos");
+            System.out.println("2. Cadastrar Veículos");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
@@ -132,7 +140,9 @@ public class ExibirMenu {
                     exibirMenuCadastroPessoaFisica(scanner);
                     break;
                 case 2:
-                    exibirMenuCadastroVeiculo(scanner);
+                    System.out.println("Cadastrar Veículo selecionado.");
+                    System.out.println("_____________________________");
+                    VeiculoView.cadastrarVeiculo(veiculoController, pessoaController, scanner);
                     break;
                 case 0:
                     System.out.println("Voltando ao menu principal...");
@@ -171,7 +181,7 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirMenuCadastroVeiculo(Scanner scanner) {
+    public static void exibirMenuCadastroVeiculo(Scanner scanner, PessoaController pessoaController, VeiculoController veiculoController) {
         int opcao;
         do {
             System.out.println("\n--- Cadastro de Veículos ---");
@@ -184,7 +194,7 @@ public class ExibirMenu {
             switch (opcao) {
                 case 1:
                     System.out.println("Cadastrar Veículo de Residente selecionado.");
-                    // Implementar lógica para Cadastrar Veículo de Residente
+                    VeiculoView.cadastrarVeiculo(veiculoController, pessoaController, scanner);
                     break;
                 case 2:
                     System.out.println("Cadastrar Veículo de Visitante selecionado.");

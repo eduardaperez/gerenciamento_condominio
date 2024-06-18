@@ -32,6 +32,15 @@ public class PessoaController {
         return null;
     }
 
+    public Residente buscarResidentePorBlocoEApartamento(int bloco, int apartamento) {
+        for (Residente residente : residentes) {
+            if (residente.getBloco() == bloco && residente.getApartamento() == apartamento) {
+                return residente;
+            }
+        }
+        return null;
+    }
+
     public List<Residente> listarResidentes() {
         return new ArrayList<>(residentes);
     }

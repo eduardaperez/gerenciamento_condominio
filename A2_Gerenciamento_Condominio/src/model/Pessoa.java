@@ -1,7 +1,6 @@
 package model;
 
 public abstract class Pessoa {
-    private int id;
     private String nome;
     private String contato;
 
@@ -11,12 +10,6 @@ public abstract class Pessoa {
         this.contato = contato;
     }
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
     public String getNome() {
         return nome;
     }

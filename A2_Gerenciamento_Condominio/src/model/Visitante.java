@@ -14,7 +14,6 @@ public class Visitante extends Pessoa {
         this.id = id;
         this.residente = residente;
     }
-
     
     public int getId() {
         return id;

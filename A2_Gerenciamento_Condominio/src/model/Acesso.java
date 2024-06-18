@@ -3,12 +3,12 @@ package model;
 import java.time.LocalDateTime;
 
 public class Acesso {
-    private int id; // Identificador único do acesso
-    private Residente residente; // Residente associado ao acesso
-    private Visitante visitante; // Visitante associado ao acesso (se aplicável)
-    private LocalDateTime entrada; // Data e hora de entrada
-    private LocalDateTime saida; // Data e hora de saída (pode ser nulo se o visitante ainda estiver no condomínio)
-    
+    private int id;
+    private Residente residente;
+    private Visitante visitante;
+    private LocalDateTime entrada;
+    private LocalDateTime saida;
+
     public Acesso(int id, Residente residente, Visitante visitante, LocalDateTime entrada, LocalDateTime saida) {
         this.id = id;
         this.residente = residente;
@@ -23,8 +23,6 @@ public class Acesso {
 
     public void setId(int id) {
         this.id = id;
-        //gerador de id modelo 
-        //getId().stream().maptoint(getId()).max().orelse(0) + 1;
     }
 
     public Residente getResidente() {
@@ -58,7 +56,4 @@ public class Acesso {
     public void setSaida(LocalDateTime saida) {
         this.saida = saida;
     }
-
-    
 }
-

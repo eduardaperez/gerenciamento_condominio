@@ -1,5 +1,6 @@
 package view;
 
+import model.Pessoa;
 import model.Residente;
 import model.Veiculo;
 import model.Visitante;
@@ -53,16 +54,34 @@ public class PessoaView {
 
         Residente residente = new Residente(nome, telefone, cpf, bloco, apartamento, vaga, dataNascimento, null);
 
-        // Melhorar
-        // perguntar se o veiculo ja esta cadastrado, se não estiver, acionar o CadastrarVeiculo e vincular ao Residente
         System.out.print("Possui veículo? [0 - não, 1 - sim]: ");
         int possuiVeiculo = scanner.nextInt();
         scanner.nextLine();
 
         if (possuiVeiculo == 1) {
-            VeiculoView.cadastrarVeiculo(vController, pController, scanner);
-            residente.setVeiculos(null);
-        } 
+            System.out.print("Veículo já está cadastrado? [0 - não, 1 - sim]: ");
+            int veiculoCadastrado = scanner.nextInt();
+            scanner.nextLine();
+
+            if (veiculoCadastrado == 1) {
+                System.out.print("Informe a placa do veículo: ");
+                String placa = scanner.nextLine().trim();
+                Veiculo veiculo = vController.obterVeiculo(placa);
+                if (veiculo != null) {
+                    residente.setVeiculos(List.of(veiculo));
+                    System.out.println("Veículo vinculado ao residente.");
+                } else {
+                    System.out.println("Veículo não encontrado.");
+                }
+            } else if (veiculoCadastrado == 0) {
+                Veiculo veiculo = VeiculoView.cadastrarVeiculo(vController, scanner);
+                if (veiculo != null) {
+                    residente.setVeiculos(List.of(veiculo));
+                    vController.cadastrarVeiculo(veiculo);
+                    System.out.println("Veículo cadastrado e vinculado ao residente.");
+                }
+            }
+        }
 
         try {
             pController.cadastrarResidente(residente);
@@ -92,12 +111,19 @@ public class PessoaView {
         int apartamentoVisita = scanner.nextInt();
         scanner.nextLine();
 
-        // Melhorar
-        // Adicionar uma pergunta se confere o residente encontrado
         Residente residente = pController.buscarResidentePorBlocoEApartamento(blocoVisita, apartamentoVisita);
 
         if (residente == null) {
             System.out.println("Residente não encontrado!");
+            return;
+        }
+
+        System.out.print("O residente encontrado é " + residente.getNome() + "? [0 - não, 1 - sim]: ");
+        int confirmaResidente = scanner.nextInt();
+        scanner.nextLine(); 
+
+        if (confirmaResidente == 0) {
+            System.out.println("Residente não confere com a pessoa que o visitante gostaria de visitar.");
             return;
         }
 

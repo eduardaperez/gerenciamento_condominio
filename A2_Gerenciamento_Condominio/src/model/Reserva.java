@@ -3,10 +3,10 @@ package model;
 import java.time.LocalDateTime;
 
 public class Reserva {
-    private int id; // Identificador único da reserva
-    private Residente residente; // Residente que fez a reserva
-    private String area; // Área reservada (ex: salão de festas, churrasqueira)
-    private LocalDateTime dataReserva; // Data e hora da reserva
+    private int id;
+    private Residente residente;
+    private String area;
+    private LocalDateTime dataReserva;
 
     public Reserva(int id, Residente residente, String area, LocalDateTime dataReserva) {
         this.id = id;
@@ -46,7 +46,4 @@ public class Reserva {
     public void setDataReserva(LocalDateTime dataReserva) {
         this.dataReserva = dataReserva;
     }
-
-    
 }
-

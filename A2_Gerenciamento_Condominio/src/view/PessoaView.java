@@ -5,76 +5,122 @@ import model.Veiculo;
 import model.Visitante;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
+import controller.PessoaController;
+import controller.VeiculoController;
+
 
 public class PessoaView {
-    private Scanner scanner = new Scanner(System.in);
 
-    public Residente cadastraRresidente() {
+    public static void cadastrarResidente(PessoaController pController, VeiculoController vController, Scanner scanner) {
+        System.out.println("\n--- Cadastro de Residente ---");
 
-        Residente residente = new Residente(null, null);
-
-        // Setando valores para cadastro
-        System.out.println("\n--- Cadastro de residente ---");
         System.out.print("Nome: ");
-        residente.setNome(scanner.nextLine());
+        String nome = scanner.nextLine().trim();
         System.out.print("Telefone: ");
-        residente.setContato(scanner.nextLine());
+        String telefone = scanner.nextLine().trim();
         System.out.print("Cpf: ");
-        residente.setCpf(scanner.nextLine());
+        String cpf = scanner.nextLine().trim();
         System.out.print("Bloco: ");
-        residente.setBloco(scanner.nextInt());
+        int bloco = scanner.nextInt();
         scanner.nextLine();
         System.out.print("Apartamento: ");
-        residente.setApartamento(scanner.nextInt());
+        int apartamento = scanner.nextInt();
         scanner.nextLine();
         System.out.print("Vaga: ");
-        residente.setVaga(scanner.nextInt());
+        int vaga = scanner.nextInt();
         scanner.nextLine();
         System.out.print("Data de Nascimento (dd/MM/yyyy): ");
-        residente.setDataNascimento(LocalDate.parse(scanner.nextLine().replace("/","-")));
+        String dataNascimentoStr = scanner.nextLine().trim();
 
-        // Condição para quem possui veiculo, aciona o CadastraVeiculo e vincula ao residente, exemplo a seguir
-        // System.out.print("Possui veiculo? [0 - não, 1 - sim]");
-        // Logica para se foi sim, chamar o método cadastrar residente e setar o objeto para o residente.setVeiculos();
-        
-        return residente;
+        if (nome.isEmpty() || telefone.isEmpty() || cpf.isEmpty() || dataNascimentoStr.isEmpty()) {
+            System.out.println("Todos os campos devem ser preenchidos.");
+            return;
+        }
+
+        LocalDate dataNascimento;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            dataNascimento = LocalDate.parse(dataNascimentoStr, formatter);
+        } catch (DateTimeParseException e) {
+            System.out.println("Data de nascimento no formato inválido.");
+            return;
+        }
+
+        Residente residente = new Residente(nome, telefone, cpf, bloco, apartamento, vaga, dataNascimento, null);
+
+        // Melhorar
+        // perguntar se o veiculo ja esta cadastrado, se não estiver, acionar o CadastrarVeiculo e vincular ao Residente
+        System.out.print("Possui veículo? [0 - não, 1 - sim]: ");
+        int possuiVeiculo = scanner.nextInt();
+        scanner.nextLine();
+
+        if (possuiVeiculo == 1) {
+            VeiculoView.cadastrarVeiculo(vController, pController, scanner);
+            residente.setVeiculos(null);
+        } 
+
+        try {
+            pController.cadastrarResidente(residente);
+            System.out.println("Residente cadastrado com sucesso!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public Visitante cadastrarVisitante() {
-
-        Visitante visitante = new Visitante(null, null);
-
+    public static void cadastrarVisitante(PessoaController pController, Scanner scanner) {
         System.out.println("\n--- Cadastro de Visitante ---");
 
         System.out.print("Nome: ");
-        visitante.setNome(scanner.nextLine());
+        String nome = scanner.nextLine().trim();
         System.out.print("Telefone: ");
-        visitante.setContato(scanner.nextLine());
-        System.out.print("Esta visitando o bloco: ");
+        String telefone = scanner.nextLine().trim();
+
+        if (nome.isEmpty() || telefone.isEmpty()) {
+            System.out.println("Todos os campos devem ser preenchidos.");
+            return;
+        }
+
+        System.out.print("Está visitando o bloco: ");
         int blocoVisita = scanner.nextInt();
         scanner.nextLine();
         System.out.print("Apartamento: ");
         int apartamentoVisita = scanner.nextInt();
         scanner.nextLine();
 
-        // executa método de busca de visitante por bloco e apartamento
-        // try buscaResidente(), se não imprime resindente não encontrado
-        // visitante.setResidente();
+        // Melhorar
+        // Adicionar uma pergunta se confere o residente encontrado
+        Residente residente = pController.buscarResidentePorBlocoEApartamento(blocoVisita, apartamentoVisita);
 
-        return visitante;
+        if (residente == null) {
+            System.out.println("Residente não encontrado!");
+            return;
+        }
+
+        Visitante visitante = new Visitante(nome, telefone);
+        visitante.setResidente(residente);
+
+        pController.cadastrarVisitante(visitante);
+
+        System.out.println("Visitante cadastrado com sucesso!");
     }
 
-    public void listarResidentes(List<Residente> residentes) {
-        System.out.println("\n--- Lista de residentees ---");
+    public void listarResidentes(PessoaController pController) {
+        List<Residente> residentes = pController.listarResidentes();
+
+        System.out.println("\n--- Lista de residentes ---");
         for (Residente m : residentes) {
             System.out.println("Nome: " + m.getNome() + ", CPF: " + m.getCpf() + ", Bloco: " + m.getBloco() +  ", Apartamento: " + m.getApartamento() + ", Contato: " + m.getContato());
         }
     }
 
-    public void listarVisitantes(List<Visitante> visitantes) {
+    public void listarVisitantes(PessoaController pController) {
+        List<Visitante> visitantes = pController.listarVisitantes();
+
         System.out.println("\n--- Lista de Visitantes ---");
         for (Visitante v : visitantes) {
             System.out.println("ID: " + v.getId() + ", Nome: " + v.getNome() + ", Contato: " + v.getContato() + ", Telefone: ");

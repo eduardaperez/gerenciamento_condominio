@@ -6,13 +6,12 @@ import java.util.Scanner;
 import controller.AcessoController;
 import controller.EntregaController;
 import controller.PessoaController;
-import controller.RelatorioController;
 import controller.ReservaController;
 import controller.VeiculoController;
 
 public class ExibirMenu {
 
-    public static void exibirMenuPrincipal(Scanner scanner, AcessoController acessoController, EntregaController entregaController, PessoaController pessoaController, RelatorioController relatorioController, ReservaController reservaController, VeiculoController veiculoController) {
+    public static void exibirMenuPrincipal(Scanner scanner, AcessoController acessoController, EntregaController entregaController, PessoaController pessoaController, ReservaController reservaController, VeiculoController veiculoController) {
         int opcao;
 
         do {
@@ -233,7 +232,7 @@ public class ExibirMenu {
                 break;
                 case 0:
                     System.out.println("Voltando ao menu principal...");
-                    exibirMenuPrincipal(scanner, null, null, null, null, null, null);
+                    exibirMenuPrincipal(scanner, null, null, null, null, null);
                 break;
                 default:
                     System.out.println("Opção inválida. Por favor, escolha novamente.");

@@ -159,7 +159,7 @@ public class PessoaView {
 
         System.out.println("\n--- Lista de residentes ---");
         for (Residente m : residentes) {
-            System.out.println("Nome: " + m.getNome() + ", CPF: " + m.getCpf() + ", Bloco: " + m.getBloco() +  ", Apartamento: " + m.getApartamento() + ", Contato: " + m.getContato() + "Veiculo Cadastrado: " +  m.getVeiculos().getFirst());
+            System.out.println("Nome: " + m.getNome() + ", CPF: " + m.getCpf() + ", Bloco: " + m.getBloco() +  ", Apartamento: " + m.getApartamento() + ", Contato: " + m.getContato());
         }
     }
 

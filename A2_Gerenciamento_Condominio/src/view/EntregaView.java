@@ -1,6 +1,8 @@
 package view;
 
 import java.util.List;
+import java.util.Scanner;
+
 import model.Entrega;
 
 public class EntregaView {

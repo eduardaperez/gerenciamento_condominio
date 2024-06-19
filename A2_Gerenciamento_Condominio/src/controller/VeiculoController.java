@@ -18,7 +18,7 @@ public class VeiculoController {
 
     public Veiculo obterVeiculo(String placa) {
         for (Veiculo veiculo : veiculos) {
-            if (veiculo.getPlaca() == placa) {
+            if (veiculo.getPlaca().equalsIgnoreCase(placa)) {
                 return veiculo;
             }
         }

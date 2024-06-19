@@ -5,13 +5,13 @@ public abstract class Validadores {
     public static boolean ValidaCpf(String cpf)
     {
         cpf = cpf.trim().replace(".", "").replace("-", "");
-        return cpf.length() == 11;
+        return cpf.length() == 11 && cpf.matches("\\d{11}");
     }
 
     public static boolean ValidaContato(String contato)
     {
         contato = contato.trim().replace("(", "").replace(")", "").replace("-", "");
-        return contato.length() == 11;
+        return contato.length() == 11 && contato.matches("\\d{11}");
     }
 
     public static boolean ValidaPlaca(String placa)

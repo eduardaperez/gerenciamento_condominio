@@ -6,8 +6,10 @@ import java.util.Scanner;
 
 import controller.AcessoController;
 import controller.PessoaController;
+import controller.VeiculoController;
 import model.Acesso;
 import model.Residente;
+import model.Veiculo;
 import model.Visitante;
 import util.Validadores;
 
@@ -98,7 +100,35 @@ public class AcessoView {
         }
     }
 
-    
+    // Dados de acesso de Veículo
+    public static void acessoVeiculo(PessoaController pController, VeiculoController vController, AcessoController aController, Scanner scan) {
+
+        System.out.println("--- Acesso Veículo ---");
+        System.out.println("Placa: ");
+        String placaVeiculo = scan.nextLine().trim();
+
+        if (placaVeiculo.isEmpty()) {
+            System.out.println("Acesso negado, insira os dados necessários.");
+            return;
+        } 
+
+        Veiculo veiculo = null;
+
+        try {
+            veiculo = vController.obterVeiculo(placaVeiculo);
+            if (veiculo == null) {
+                System.out.println("Veículo não encontrado, encaminhando para cadastro ...");
+                System.out.println(".............................");
+                VeiculoView.cadastrarVeiculo(vController, pController, scan);
+                aController.registrarEntradaVeiculo(veiculo, LocalDateTime.now());
+            } else {
+                aController.registrarEntradaVeiculo(veiculo, LocalDateTime.now());
+                System.out.println("Entrada registrada com sucesso.");
+            }
+        } catch (Exception e) {
+            System.out.println("Ocorreu um erro ao registrar a entrada: " + e.getMessage());
+        }
+    }
 
 
 

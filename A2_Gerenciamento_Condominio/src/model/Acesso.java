@@ -7,14 +7,12 @@ public class Acesso {
     private Residente residente;
     private Visitante visitante;
     private LocalDateTime entrada;
-    private LocalDateTime saida;
 
-    public Acesso(int id, Residente residente, Visitante visitante, LocalDateTime entrada, LocalDateTime saida) {
+    public Acesso(int id, LocalDateTime entrada) {
         this.id = id;
-        this.residente = residente;
-        this.visitante = visitante;
+        this.residente = null;
+        this.visitante = null;
         this.entrada = entrada;
-        this.saida = saida;
     }
 
     public int getId() {
@@ -47,13 +45,5 @@ public class Acesso {
 
     public void setEntrada(LocalDateTime entrada) {
         this.entrada = entrada;
-    }
-
-    public LocalDateTime getSaida() {
-        return saida;
-    }
-
-    public void setSaida(LocalDateTime saida) {
-        this.saida = saida;
     }
 }

@@ -1,6 +1,5 @@
 package view;
 
-import model.Pessoa;
 import model.Residente;
 import model.Veiculo;
 import model.Visitante;
@@ -76,20 +75,29 @@ public class PessoaView {
 
             if (veiculoCadastrado == 1) {
                 System.out.print("Informe a placa do veículo: ");
-                String placa = scanner.nextLine().trim();
+                String placa = scanner.nextLine().trim().toUpperCase();
+
+                if (!Validadores.ValidaPlaca(placa)) {
+                    System.out.println("Placa no formato inválido.");
+                    return;
+                }
+
                 Veiculo veiculo = vController.obterVeiculo(placa);
+
                 if (veiculo != null) {
                     residente.setVeiculos(List.of(veiculo));
                     System.out.println("Veículo vinculado ao residente.");
+
                 } else {
                     System.out.println("Veículo não encontrado.");
+                    return;
                 }
+                
             } else if (veiculoCadastrado == 0) {
                 Veiculo veiculo = VeiculoView.cadastrarVeiculo(vController, scanner);
                 if (veiculo != null) {
                     residente.setVeiculos(List.of(veiculo));
-                    vController.cadastrarVeiculo(veiculo);
-                    System.out.println("Veículo cadastrado e vinculado ao residente.");
+                    System.out.println("Veículo vinculado ao residente com sucesso!");
                 }
             }
         }
@@ -159,7 +167,22 @@ public class PessoaView {
 
         System.out.println("\n--- Lista de residentes ---");
         for (Residente m : residentes) {
-            System.out.println("Nome: " + m.getNome() + ", CPF: " + m.getCpf() + ", Bloco: " + m.getBloco() +  ", Apartamento: " + m.getApartamento() + ", Contato: " + m.getContato());
+            System.out.println("Nome: " + m.getNome() + 
+                               ", CPF: " + m.getCpf() + 
+                               ", Bloco: " + m.getBloco() +  
+                               ", Apartamento: " + m.getApartamento() + 
+                               ", Contato: " + m.getContato());
+    
+            if (m.getVeiculos() != null && !m.getVeiculos().isEmpty()) {
+                System.out.println("Veículos:");
+                for (Veiculo v : m.getVeiculos()) {
+                    System.out.println("\tPlaca: " + v.getPlaca() + 
+                                       ", Modelo: " + v.getModelo() + 
+                                       ", Tipo: " + v.getTipo());
+                }
+            } else {
+                System.out.println("Não possui veículos.");
+            }
         }
     }
 
@@ -168,7 +191,10 @@ public class PessoaView {
 
         System.out.println("\n--- Lista de Visitantes ---");
         for (Visitante v : visitantes) {
-            System.out.println("ID: " + v.getId() + ", Nome: " + v.getNome() + ", Contato: " + v.getContato() + ", Telefone: ");
+            System.out.println("ID: " + v.getId() + 
+                                ", Nome: " + v.getNome() + 
+                                ", Contato: " + v.getContato() + 
+                                ", Telefone: ");
         }
     }
 }

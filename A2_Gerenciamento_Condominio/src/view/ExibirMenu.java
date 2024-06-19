@@ -46,14 +46,14 @@ public class ExibirMenu {
                         exibirMenuReservas(scanner);
                         break;
                     case 5:
-                        exibirMenuRelatorios(scanner);
+                        exibirMenuRelatorios(scanner, pessoaController);
                         break;
                     default:
                         System.out.println("Opção inválida. Por favor, escolha novamente.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
-                scanner.nextLine(); // Limpa o buffer
+                scanner.nextLine(); 
                 opcao = -1; // Reinicia a opcao
             }
         } while (opcao != 0);
@@ -70,7 +70,7 @@ public class ExibirMenu {
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer
+            scanner.nextLine();
             switch (opcao) {
                 case 1:
                     System.out.println("Entrada de Pessoa selecionada.");
@@ -106,7 +106,7 @@ public class ExibirMenu {
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer
+            scanner.nextLine(); 
             switch (opcao) {
                 case 1:
                     System.out.println("Registrar Chegada de Encomenda selecionada.");
@@ -133,78 +133,44 @@ public class ExibirMenu {
             System.out.println("2. Cadastrar Veículos");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer
-            switch (opcao) {
-                case 1:
-                    exibirMenuCadastroPessoaFisica(scanner);
-                    break;
-                case 2:
-                    System.out.println("Cadastrar Veículo selecionado.");
-                    System.out.println("_____________________________");
-                    VeiculoView.cadastrarVeiculo(veiculoController, pessoaController, scanner);
-                    break;
-                case 0:
-                    System.out.println("Voltando ao menu principal...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Por favor, escolha novamente.");
-            }
-        } while (opcao != 0);
-    }
 
-    public static void exibirMenuCadastroPessoaFisica(Scanner scanner) {
-        int opcao;
-        do {
-            System.out.println("\n--- Cadastro de Pessoa Física ---");
-            System.out.println("1. Cadastrar Residente");
-            System.out.println("2. Cadastrar Visitante");
-            System.out.println("0. Voltar");
-            System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer
-            switch (opcao) {
-                case 1:
-                    System.out.println("Cadastrar Residente selecionado.");
-                    // Implementar lógica para Cadastrar Residente
-                    break;
-                case 2:
-                    System.out.println("Cadastrar Visitante selecionado.");
-                    // Implementar lógica para Cadastrar Visitante
-                    break;
-                case 0:
-                    System.out.println("Voltando ao menu de cadastros...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Por favor, escolha novamente.");
-            }
-        } while (opcao != 0);
-    }
+            try{
+                opcao = scanner.nextInt();
+                scanner.nextLine(); 
+                switch (opcao) {
+                    case 1:
+                        System.out.println("\nCadastrar Pessoa Física selecionado.");
+                        System.out.println("------------------------------------");
+                        
+                        System.out.print("Selecione uma opção? [1 - Residente, 2 - Visitante]: ");
+                        int tipoCadastro = scanner.nextInt();
+                        scanner.nextLine();
 
-    public static void exibirMenuCadastroVeiculo(Scanner scanner, PessoaController pessoaController, VeiculoController veiculoController) {
-        int opcao;
-        do {
-            System.out.println("\n--- Cadastro de Veículos ---");
-            System.out.println("1. Cadastrar Veículo de Residente");
-            System.out.println("2. Cadastrar Veículo de Visitante");
-            System.out.println("0. Voltar");
-            System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer
-            switch (opcao) {
-                case 1:
-                    System.out.println("Cadastrar Veículo de Residente selecionado.");
-                    VeiculoView.cadastrarVeiculo(veiculoController, pessoaController, scanner);
-                    break;
-                case 2:
-                    System.out.println("Cadastrar Veículo de Visitante selecionado.");
-                    // Implementar lógica para Cadastrar Veículo de Visitante
-                    break;
-                case 0:
-                    System.out.println("Voltando ao menu de cadastros...");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Por favor, escolha novamente.");
+                        if (tipoCadastro == 1) 
+                            PessoaView.cadastrarResidente(pessoaController, veiculoController, scanner);
+
+                        else if (tipoCadastro == 2) 
+                            PessoaView.cadastrarVisitante(pessoaController, scanner);
+
+                        break;
+    
+                    case 2:
+                        System.out.println("Cadastrar Veículo selecionado.");
+                        System.out.println("------------------------------------");
+                        VeiculoView.cadastrarVeiculo(veiculoController, pessoaController, scanner);
+                        break;
+                        
+                    case 0:
+                        System.out.println("Voltando ao menu principal...");
+                        break;
+    
+                    default:
+                        System.out.println("Opção inválida. Por favor, escolha novamente.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
+                scanner.nextLine(); 
+                opcao = -1; // Reinicia a opcao
             }
         } while (opcao != 0);
     }
@@ -237,12 +203,12 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirMenuRelatorios(Scanner scanner) {
+    public static void exibirMenuRelatorios(Scanner scanner, PessoaController pessoaController) {
         int opcao;
         do {
             System.out.println("\n--- Relatórios ---");
             System.out.println("1. Relatório de Acessos");
-            System.out.println("2. Relatório de Visitantes");
+            System.out.println("2. Relatório de Pessoas");
             System.out.println("3. Relatório de Entregas");
             System.out.println("4. Relatório de Reservas");
             System.out.println("0. Voltar");
@@ -256,7 +222,9 @@ public class ExibirMenu {
                     break;
                 case 2:
                     System.out.println("Relatório de Visitantes selecionado.");
-                    // Implementar lógica para Relatório de Visitantes
+                    System.out.println("------------------------------------");
+
+                    PessoaView.listarResidentes(pessoaController);
                     break;
                 case 3:
                     System.out.println("Relatório de Entregas selecionado.");

@@ -14,31 +14,28 @@ public class PessoaController {
 
 
     //Métodos Residentes
-    public void cadastrarResidente(Residente residente) {
-        if (Validadores.ValidaCpf(residente.getCpf())) {
-            residentes.add(residente);
-            System.out.println("residente cadastrado com sucesso.");
-        } else {
-            System.out.println("CPF inválido. Cadastro não realizado.");
+    public boolean cadastrarResidente(Residente residente) {
+        if (obterResidente(residente.getCpf()) != null) {
+            System.out.println("Residente já está cadastrado com este CPF.");
+            return false;
         }
+
+        residentes.add(residente);
+        return true;
     }
 
     public Residente obterResidente(String cpf) {
-        for (Residente residente : residentes) {
-            if (residente.getCpf() == cpf) {
-                return residente;
-            }
-        }
-        return null;
+        return residentes.stream()
+                         .filter(r -> r.getCpf().equalsIgnoreCase(cpf))
+                         .findFirst()
+                         .orElse(null);
     }
 
     public Residente buscarResidentePorBlocoEApartamento(int bloco, int apartamento) {
-        for (Residente residente : residentes) {
-            if (residente.getBloco() == bloco && residente.getApartamento() == apartamento) {
-                return residente;
-            }
-        }
-        return null;
+        return residentes.stream()
+                         .filter(r -> r.getBloco() == bloco && r.getApartamento() == apartamento)
+                         .findFirst()
+                         .orElse(null);
     }
 
     public List<Residente> listarResidentes() {
@@ -58,13 +55,14 @@ public class PessoaController {
     }
 
     //Métodos Visitantes
-    public void cadastrarVisitante(Visitante visitante) {
-        if (Validadores.ValidaContato(visitante.getContato())) {
-            visitantes.add(visitante);
-            System.out.println("Residente cadastrado com sucesso.");
-        } else {
-            System.out.println("CPF inválido. Cadastro não realizado.");
+    public boolean cadastrarVisitante(Visitante visitante) {
+        if (obterVisitantePorNomeETelefone(visitante.getNome(), visitante.getContato()) != null) {
+            System.out.println("Ja existe um visitante cadastrado com este nome e telefone!");
+            return false;
         }
+
+        visitantes.add(visitante);
+        return true;
     }
 
     public Visitante obterVisitante(int id) {
@@ -88,5 +86,16 @@ public class PessoaController {
 
     public void removerVisitante(int id) {
         visitantes.removeIf(visitante -> visitante.getId() == id);
+    }
+
+    public Visitante obterVisitantePorNomeETelefone(String nome, String telefone) {
+        return visitantes.stream()
+                         .filter(v -> v.getNome().equalsIgnoreCase(nome) && v.getContato().equalsIgnoreCase(telefone))
+                         .findFirst()
+                         .orElse(null);    
+    }
+
+    public int gerarIdVisitante() {
+        return visitantes.stream().mapToInt(Visitante::getId).max().orElse(0) + 1;
     }
 }

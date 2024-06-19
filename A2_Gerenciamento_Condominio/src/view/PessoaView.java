@@ -11,6 +11,7 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
+import util.*;
 import controller.PessoaController;
 import controller.VeiculoController;
 
@@ -22,19 +23,29 @@ public class PessoaView {
 
         System.out.print("Nome: ");
         String nome = scanner.nextLine().trim();
+
         System.out.print("Telefone: ");
         String telefone = scanner.nextLine().trim();
+        if (!Validadores.ValidaContato(telefone)) {
+            System.out.println("Telefone no formato inválido.");
+            return;
+        }
+
         System.out.print("Cpf: ");
         String cpf = scanner.nextLine().trim();
+        if (!Validadores.ValidaCpf(cpf)) {
+            System.out.println("CPF no formato inválido.");
+            return;
+        }
+
         System.out.print("Bloco: ");
         int bloco = scanner.nextInt();
         scanner.nextLine();
+        
         System.out.print("Apartamento: ");
         int apartamento = scanner.nextInt();
         scanner.nextLine();
-        System.out.print("Vaga: ");
-        int vaga = scanner.nextInt();
-        scanner.nextLine();
+
         System.out.print("Data de Nascimento (dd/MM/yyyy): ");
         String dataNascimentoStr = scanner.nextLine().trim();
 
@@ -52,7 +63,7 @@ public class PessoaView {
             return;
         }
 
-        Residente residente = new Residente(nome, telefone, cpf, bloco, apartamento, vaga, dataNascimento, null);
+        Residente residente = new Residente(nome, telefone, cpf, bloco, apartamento, dataNascimento, null);
 
         System.out.print("Possui veículo? [0 - não, 1 - sim]: ");
         int possuiVeiculo = scanner.nextInt();
@@ -83,12 +94,10 @@ public class PessoaView {
             }
         }
 
-        try {
-            pController.cadastrarResidente(residente);
-            System.out.println("Residente cadastrado com sucesso!");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        if(pController.cadastrarResidente(residente))
+            System.out.println("Residente cadastrado com sucesso.");
+        else
+            System.out.println("Erro ao cadastrar residente");
     }
 
     public static void cadastrarVisitante(PessoaController pController, Scanner scanner) {
@@ -96,8 +105,13 @@ public class PessoaView {
 
         System.out.print("Nome: ");
         String nome = scanner.nextLine().trim();
+        
         System.out.print("Telefone: ");
         String telefone = scanner.nextLine().trim();
+        if (!Validadores.ValidaContato(telefone)) {
+            System.out.println("Telefone no formato inválido.");
+            return;
+        }
 
         if (nome.isEmpty() || telefone.isEmpty()) {
             System.out.println("Todos os campos devem ser preenchidos.");
@@ -107,6 +121,7 @@ public class PessoaView {
         System.out.print("Está visitando o bloco: ");
         int blocoVisita = scanner.nextInt();
         scanner.nextLine();
+
         System.out.print("Apartamento: ");
         int apartamentoVisita = scanner.nextInt();
         scanner.nextLine();
@@ -130,21 +145,25 @@ public class PessoaView {
         Visitante visitante = new Visitante(nome, telefone);
         visitante.setResidente(residente);
 
-        pController.cadastrarVisitante(visitante);
+        visitante.setId(pController.gerarIdVisitante());
 
-        System.out.println("Visitante cadastrado com sucesso!");
+        if (pController.cadastrarVisitante(visitante)) {
+            System.out.println("Visitante cadastrado com sucesso.");
+        } else {
+            System.out.println("Erro ao registrar visitante");
+        }
     }
 
-    public void listarResidentes(PessoaController pController) {
+    public static void listarResidentes(PessoaController pController) {
         List<Residente> residentes = pController.listarResidentes();
 
         System.out.println("\n--- Lista de residentes ---");
         for (Residente m : residentes) {
-            System.out.println("Nome: " + m.getNome() + ", CPF: " + m.getCpf() + ", Bloco: " + m.getBloco() +  ", Apartamento: " + m.getApartamento() + ", Contato: " + m.getContato());
+            System.out.println("Nome: " + m.getNome() + ", CPF: " + m.getCpf() + ", Bloco: " + m.getBloco() +  ", Apartamento: " + m.getApartamento() + ", Contato: " + m.getContato() + "Veiculo Cadastrado: " +  m.getVeiculos().getFirst());
         }
     }
 
-    public void listarVisitantes(PessoaController pController) {
+    public static void listarVisitantes(PessoaController pController) {
         List<Visitante> visitantes = pController.listarVisitantes();
 
         System.out.println("\n--- Lista de Visitantes ---");

@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 import model.Acesso;
 import model.Residente;
+import model.Veiculo;
 import model.Visitante;
-//import model.Veiculo;
 
 public class AcessoController {
     private List<Acesso> acessos;
@@ -27,6 +27,13 @@ public class AcessoController {
     }
 
     public void registrarEntradaVisitante(Visitante visitante, LocalDateTime entrada) {
+
+        Acesso acesso = new Acesso(gerarIdAcesso(), entrada);
+        acessos.add(acesso);
+
+    }
+
+    public void registrarEntradaVeiculo(Veiculo veiculo, LocalDateTime entrada) {
 
         Acesso acesso = new Acesso(gerarIdAcesso(), entrada);
         acessos.add(acesso);

@@ -33,7 +33,7 @@ public class ExibirMenu {
                         System.out.println("Saindo do sistema...");
                         break;
                     case 1:
-                        exibirMenuControleAcesso(acessoController, pessoaController, scanner);
+                        exibirMenuControleAcesso(acessoController, pessoaController, veiculoController, scanner);
                         break;
                     case 2:
                         exibirMenuEntregas(scanner);
@@ -58,7 +58,7 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirMenuControleAcesso(AcessoController acessoController, PessoaController pessoaController, Scanner scanner) {
+    public static void exibirMenuControleAcesso(AcessoController acessoController, PessoaController pessoaController, VeiculoController veiculoController, Scanner scanner) {
         int opcao;
         do {
             System.out.println("\n--- Controle de Acesso ---");
@@ -82,7 +82,8 @@ public class ExibirMenu {
                     break;
                 case 3:
                     System.out.println("Entrada de Veículo selecionada.");
-                    // Implementar lógica para Entrada de Veículo
+                    System.out.println("_________________________________");
+                    AcessoView.acessoVeiculo(pessoaController, veiculoController, acessoController, scanner);
                     break;
                 case 0:
                     System.out.println("Voltando ao menu principal...");

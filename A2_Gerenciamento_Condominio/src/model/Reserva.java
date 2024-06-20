@@ -1,26 +1,31 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Reserva {
+    private static int proximoId = 1; // Variável estática para controlar o próximo ID disponível
     private int id;
     private Residente residente;
     private String area;
-    private LocalDateTime dataReserva;
+    private LocalDate dataReserva;
 
-    public Reserva(int id, Residente residente, String area, LocalDateTime dataReserva) {
-        this.id = id;
+    // Construtor
+    public Reserva(Residente residente, String area, LocalDate dataReserva) {
+        this.id = gerarProximoId();
         this.residente = residente;
         this.area = area;
         this.dataReserva = dataReserva;
     }
 
-    public int getId() {
-        return id;
+    // Método estático sincronizado para gerar o próximo ID
+    private synchronized static int gerarProximoId() {
+        return proximoId++;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    // Getters e Setters
+    public int getId() {
+        return id;
     }
 
     public Residente getResidente() {
@@ -39,11 +44,11 @@ public class Reserva {
         this.area = area;
     }
 
-    public LocalDateTime getDataReserva() {
+    public LocalDate getDataReserva() {
         return dataReserva;
     }
 
-    public void setDataReserva(LocalDateTime dataReserva) {
+    public void setDataReserva(LocalDate dataReserva) {
         this.dataReserva = dataReserva;
     }
 }

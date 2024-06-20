@@ -42,7 +42,7 @@ public class ExibirMenu {
                         exibirMenuCadastros(scanner, pessoaController, veiculoController);
                         break;
                     case 4:
-                        exibirMenuReservas(scanner);
+                        ReservaView.iniciarReserva(scanner, pessoaController, reservaController);
                         break;
                     case 5:
                         exibirMenuRelatorios(scanner, pessoaController, veiculoController);

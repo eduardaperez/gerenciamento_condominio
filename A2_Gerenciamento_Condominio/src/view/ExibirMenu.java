@@ -45,7 +45,7 @@ public class ExibirMenu {
                         ReservaView.iniciarReserva(scanner, pessoaController, reservaController);
                         break;
                     case 5:
-                        exibirMenuRelatorios(scanner, pessoaController, veiculoController);
+                        exibirMenuRelatorios(scanner, acessoController, pessoaController, veiculoController);
                         break;
                     default:
                         System.out.println("Opção inválida. Por favor, escolha novamente.");
@@ -200,7 +200,7 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirMenuRelatorios(Scanner scanner, PessoaController pessoaController, VeiculoController veiculoController) {
+    public static void exibirMenuRelatorios(Scanner scanner, AcessoController acessoController, PessoaController pessoaController, VeiculoController veiculoController) {
         int opcao;
         do {
             System.out.println("\n--- Relatórios ---");
@@ -216,7 +216,7 @@ public class ExibirMenu {
             switch (opcao) {
                 case 1:
                     System.out.println("Relatório de Acessos selecionado.");
-                    exibirTiposAcesso(scanner);
+                    exibirTiposAcesso(acessoController, veiculoController, pessoaController, scanner);
                 break;
                 case 2:
                     System.out.println("\nRelatório de Visitantes selecionado.");
@@ -257,7 +257,7 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirTiposAcesso(Scanner scanner) {
+    public static void exibirTiposAcesso(AcessoController acessoController, VeiculoController veiculoController, PessoaController pessoaController, Scanner scanner) {
         int opcao;
         do {
             System.out.println("\n--- Acessos ---");
@@ -265,7 +265,7 @@ public class ExibirMenu {
             System.out.println("2. Acessos do dia");
             System.out.println("3. Acesso de Residentes");
             System.out.println("4. Acesso de Visitantes");
-            System.out.println("3. Acesso de Veículos");
+            System.out.println("5. Acesso de Veículos");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
@@ -273,27 +273,27 @@ public class ExibirMenu {
             switch (opcao) {
                 case 1:
                     System.out.println("--- Todos os acessos ---");
-                    // Implementar
+                    AcessoView.exibirAcessos(acessoController, veiculoController, pessoaController);
                 break;
                 case 2:
                     System.out.println("--- Acessos do dia ---");
-                    // Implementar
+                    AcessoView.exibirAcessosDia(acessoController, pessoaController, veiculoController, scanner);
                 break;
                 case 3:
                     System.out.println("--- Acesso de Residentes ---");
-                    // Implementar
+                    AcessoView.exibirAcessosResidentes(acessoController, pessoaController);
                 break;
                 case 4:
                     System.out.println("--- Acesso de Visitantes ---");
-                    // Implementar
+                    AcessoView.exibirAcessosVisitantes(acessoController, pessoaController);
                 break;
                 case 5:
                     System.out.println("--- Acesso de Veículos ---");
-                    // Implementar
+                    AcessoView.exibirAcessosVeiculos(acessoController, veiculoController);
                 break;
                 case 0:
                     System.out.println("Voltando ao menu anterior...");
-                    //exibirMenuRelatorios(scanner);
+                    exibirMenuRelatorios(scanner, acessoController, pessoaController, veiculoController);
                 break;
                 default:
                     System.out.println("Opção inválida. Por favor, escolha novamente.");

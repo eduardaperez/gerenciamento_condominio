@@ -6,12 +6,14 @@ public class Acesso {
     private int id;
     private Residente residente;
     private Visitante visitante;
+    private Veiculo veiculo;
     private LocalDateTime entrada;
 
     public Acesso(int id, LocalDateTime entrada) {
         this.id = id;
         this.residente = null;
         this.visitante = null;
+        this.veiculo = null;
         this.entrada = entrada;
     }
 
@@ -37,6 +39,14 @@ public class Acesso {
 
     public void setVisitante(Visitante visitante) {
         this.visitante = visitante;
+    }
+
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
     public LocalDateTime getEntrada() {

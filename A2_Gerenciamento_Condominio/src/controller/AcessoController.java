@@ -22,6 +22,7 @@ public class AcessoController {
     
     public void registrarEntradaResidente(Residente residente, LocalDateTime entrada) {
         Acesso acesso = new Acesso(gerarIdAcesso(), entrada);
+        acesso.setResidente(residente);
         acessos.add(acesso);
 
     }
@@ -29,6 +30,7 @@ public class AcessoController {
     public void registrarEntradaVisitante(Visitante visitante, LocalDateTime entrada) {
 
         Acesso acesso = new Acesso(gerarIdAcesso(), entrada);
+        acesso.setVisitante(visitante);
         acessos.add(acesso);
 
     }
@@ -36,34 +38,21 @@ public class AcessoController {
     public void registrarEntradaVeiculo(Veiculo veiculo, LocalDateTime entrada) {
 
         Acesso acesso = new Acesso(gerarIdAcesso(), entrada);
+        acesso.setVeiculo(veiculo);
         acessos.add(acesso);
 
     }
 
 
     
-    public List<String> listarEntradas() {
-        return acessos.stream()
-            .map(acesso -> {
-                String tipo = (acesso.getResidente() != null) ? "Residente" : "Visitante";
-                String nome = (acesso.getResidente() != null) ? acesso.getResidente().getNome() : acesso.getVisitante().getNome();
-                return "ID: " + acesso.getId() + ", Tipo: " + tipo + ", Nome: " + nome + ", Entrada: " + acesso.getEntrada();
-            })
-            .collect(Collectors.toList());
+    public List<Acesso> listarAcessos() {
+        return new ArrayList<>(acessos);
     }
 
     
-    public List<String> listarEntradasPorDia(LocalDate dia) {
+    public List<Acesso> listarAcessosDia(LocalDate dia) {
         return acessos.stream()
-            .filter(acesso -> {
-                LocalDate dataEntrada = acesso.getEntrada().toLocalDate();
-                return dataEntrada.isEqual(dia);
-            })
-            .map(acesso -> {
-                String tipo = (acesso.getResidente() != null) ? "Residente" : "Visitante";
-                String nome = (acesso.getResidente() != null) ? acesso.getResidente().getNome() : acesso.getVisitante().getNome();
-                return "ID: " + acesso.getId() + ", Tipo: " + tipo + ", Nome: " + nome + ", Entrada: " + acesso.getEntrada();
-            })
+            .filter(acesso -> acesso.getEntrada().toLocalDate().isEqual(dia))
             .collect(Collectors.toList());
     }
 
@@ -71,3 +60,14 @@ public class AcessoController {
         return acessos.stream().mapToInt(Acesso::getId).max().orElse(0) + 1;
     }
 }
+
+
+/*for (Acesso a : acessos) {
+            LocalDate dataEntrada = a.getEntrada().toLocalDate();
+
+            if (dia == dataEntrada) {
+                if (condition) {
+                    
+                }
+            }
+        } */

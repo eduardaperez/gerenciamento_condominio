@@ -16,7 +16,7 @@ public abstract class Validadores {
 
     public static boolean ValidaPlaca(String placa)
     {
-        placa = placa.trim().replace("-", "");
+        placa = placa.trim().replace("-", "").toUpperCase();
 
         // Expressões regulares para os dois formatos de placas
         String regexAntigo = "^[A-Z]{3}-[0-9]{4}$";       // Formato antigo

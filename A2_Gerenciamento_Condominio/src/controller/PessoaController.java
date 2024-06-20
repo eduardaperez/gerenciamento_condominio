@@ -30,6 +30,15 @@ public class PessoaController {
                          .findFirst()
                          .orElse(null);
     }
+     
+    public Residente obterResidentePeloNome(String nome) {
+        for (Residente residente : residentes) {
+            if (residente.getNome().equalsIgnoreCase(nome)) {
+                return residente;
+            }
+        }
+        return null;
+    }
 
     public Residente buscarResidentePorBlocoEApartamento(int bloco, int apartamento) {
         return residentes.stream()

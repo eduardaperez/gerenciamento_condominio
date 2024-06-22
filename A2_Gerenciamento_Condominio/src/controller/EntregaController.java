@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import controller.interfaces.IEntrega;
 import model.Entrega;
-import model.Visitante;
 
 public class EntregaController implements IEntrega {
 

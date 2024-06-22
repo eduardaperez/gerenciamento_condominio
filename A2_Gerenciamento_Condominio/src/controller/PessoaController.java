@@ -1,14 +1,12 @@
 // src/controller/PessoaController.java
 package controller;
 
-import model.Pessoa;
 import model.Residente;
 import model.Visitante;
 
-import util.Validadores;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import controller.interfaces.IPessoa;
 
@@ -48,16 +46,16 @@ public class PessoaController implements IPessoa{
         return new ArrayList<>(residentes);
     }
 
-    public void atualizarResidente(Residente residente) {
-        residente.setCpf(null);
-        residente.setNome(null);
-        residente.setContato(null);
-        residente.setDataNascimento(null);
-        residente.setVeiculos(null);
+    public void atualizarResidente(Residente residente, String nome, String contato, int bloco, int apto, LocalDate dtaNascimento) {
+        residente.setNome(nome);
+        residente.setContato(contato);
+        residente.setBloco(bloco);
+        residente.setApartamento(apto);
+        residente.setDataNascimento(dtaNascimento);
     }
 
     public void removerResidente(String cpf) {
-        residentes.removeIf(residente -> residente.getCpf() == cpf);
+        residentes.removeIf(residente -> residente.getCpf().equals(cpf));
     }
 
     //Métodos Visitantes
@@ -84,10 +82,9 @@ public class PessoaController implements IPessoa{
         return new ArrayList<>(visitantes);
     }
 
-    public void atualizarVisitante(Visitante visitante) {
-        visitante.setNome(null);
-        visitante.setContato(null);
-        //visitante.setVeiculos(null);
+    public void atualizarVisitante(Visitante visitante, String nome, String telefone) {
+        visitante.setNome(nome);
+        visitante.setContato(telefone);
     }
 
     public void removerVisitante(int id) {
@@ -99,6 +96,13 @@ public class PessoaController implements IPessoa{
                          .filter(v -> v.getNome().equalsIgnoreCase(nome) && v.getContato().equalsIgnoreCase(telefone))
                          .findFirst()
                          .orElse(null);    
+    }
+
+    public Visitante obterVisitatePorTelefone(String telefone) {
+        return visitantes.stream()
+                         .filter(v -> v.getContato().equalsIgnoreCase(telefone))
+                         .findFirst()
+                         .orElse(null);   
     }
 
     public int gerarIdVisitante() {

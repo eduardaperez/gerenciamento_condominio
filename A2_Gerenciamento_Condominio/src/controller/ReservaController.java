@@ -15,6 +15,7 @@ public class ReservaController {
     public ReservaController() {
         this.reservas = new ArrayList<>();
     }
+    
 
     public void adicionarReserva(Reserva reserva) {
         boolean disponivel = reservas.stream()
@@ -52,5 +53,13 @@ public class ReservaController {
 
     public int gerarIdReserva(){
         return reservas.stream().mapToInt(Reserva::getId).max().orElse(0) + 1;
+    }
+    public List<String> listarTodasReservas() {
+        return reservas.stream()
+                .sorted(Comparator.comparing(Reserva::getDataReserva))
+                .map(reserva -> "Residente: " + reserva.getResidente().getNome() +
+                                ", Área: " + reserva.getArea() +
+                                ", Data : " + reserva.getDataReserva().toString())
+                .collect(Collectors.toList());
     }
 }

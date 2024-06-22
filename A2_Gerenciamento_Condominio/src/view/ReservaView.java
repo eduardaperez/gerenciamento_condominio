@@ -31,12 +31,12 @@ public class ReservaView {
         int opcao;
 
         do {
-            System.out.println("\n--- Menu de Reservas ---");
-            System.out.println("1. Churrasqueira");
-            System.out.println("2. Salão de Festas");
-            System.out.println("3. Piscina");
-            System.out.println("4. Quadra");
-            System.out.println("5. Cancelar Reserva");
+            System.out.println("\n=== Reservas ===");
+            System.out.println("1. Para reservar a Churrasqueira");
+            System.out.println("2. Para reservar o Salão de Festas");
+            System.out.println("3. Para reservar a Piscina");
+            System.out.println("4. Para reservar a Quadra");
+            System.out.println("5. Cancelar a sua Reserva");
             System.out.println("6. Lista de Reservas");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
@@ -99,12 +99,13 @@ public class ReservaView {
         int opcaoArea; 
         String areaSelecionada = null;
 
-        System.out.println("\n--- Listagem de Datas Ocupadas ---");
+        System.out.println("\n=== Listagem de Datas Ocupadas ===");
         System.out.println("Selecione a área para listar as datas ocupadas:");
         System.out.println("1. Churrasqueira");
         System.out.println("2. Salão de Festas");
         System.out.println("3. Piscina");
         System.out.println("4. Quadra");
+        System.out.println("5. Para listar todas as reservas");
         System.out.print("Escolha uma opção: ");
 
         try {
@@ -124,6 +125,9 @@ public class ReservaView {
                 case 4:
                     areaSelecionada = "Quadra";
                     break;
+                case 5:
+                    listarTodasReservasFeitas(reservaController);
+                    return;
                 default:
                     System.out.println("Opção inválida. Voltando ao menu principal.");
                     return;
@@ -149,9 +153,9 @@ public class ReservaView {
         List<Reserva> reservasDoResidente = reservaController.buscarReservasPorNomeCpf(residente.getCpf());
 
         if (reservasDoResidente.isEmpty()) {
-            System.out.println("Não há reservas encontradas para o residente com CPF: " + residente.getCpf());
+            System.out.println("Não há reservas encontradas para o residente com nome: " + residente.getNome());
         } else {
-            System.out.println("Reservas encontradas para o residente com CPF: " + residente.getCpf() + ":");
+            System.out.println("Reservas encontradas para o residente com nome: " + residente.getNome() + ":");
             for (Reserva reserva : reservasDoResidente) {
                 System.out.println("ID: " + reserva.getId() + ", Área: " + reserva.getArea() + ", Data: " + reserva.getDataReserva());
             }
@@ -167,6 +171,16 @@ public class ReservaView {
                 return;
             }
 
+            Reserva reservaParaCancelar = reservasDoResidente.stream()
+                .filter(reserva -> reserva.getId() == idReserva)
+                .findFirst()
+                .orElse(null);
+
+                if (reservaParaCancelar == null) {
+                    System.out.println("ID da reserva não encontrado.");
+                return;
+        }
+
             while (true) {
                 System.out.print("Tem certeza que deseja cancelar esta reserva? (s/n): ");
                 String confirmacao = scanner.nextLine();
@@ -181,5 +195,16 @@ public class ReservaView {
                     System.out.println("Opção inválida. Por favor, digite 's' para sim ou 'n' para não.");
                 }
             }
-        }
-    }}
+        }}
+        public static void listarTodasReservasFeitas(ReservaController reservaController) {
+            List<String> todasReservas = reservaController.listarTodasReservas();
+            if (todasReservas.isEmpty()) {
+                System.out.println("Não há reservas cadastradas.");
+            } else {
+                System.out.println("\n=== Todas as Reservas ===");
+                for (String reserva : todasReservas) {
+                    System.out.println(reserva);
+                }
+            }
+    }
+}    

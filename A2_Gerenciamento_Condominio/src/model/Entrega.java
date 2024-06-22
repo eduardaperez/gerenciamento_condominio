@@ -3,18 +3,18 @@ package model;
 import java.time.LocalDateTime;
 
 public class Entrega {
-    private int id; // Identificador único da entrega
-    private Residente residente; // Residente associado à entrega
-    private String descricao; // Descrição da entrega (ex: pacote, carta)
-    private LocalDateTime dataRecebimento; // Data e hora em que a entrega foi recebida pela portaria
-    private boolean retirada; // Indica se a entrega já foi retirada pelo residente
+    private int id; 
+    private Residente residente; 
+    private String descricao; 
+    private LocalDateTime dataRecebimento; 
+    private boolean retirada; 
     
-    public Entrega(int id, Residente residente, String descricao, LocalDateTime dataRecebimento, boolean retirada) {
+    public Entrega(int id, Residente residente, String descricao, LocalDateTime dataRecebimento) {
         this.id = id;
         this.residente = residente;
         this.descricao = descricao;
         this.dataRecebimento = dataRecebimento;
-        this.retirada = retirada;
+        this.retirada = false;
     }
 
     public int getId() {

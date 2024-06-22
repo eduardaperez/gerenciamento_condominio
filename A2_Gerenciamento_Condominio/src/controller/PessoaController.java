@@ -4,6 +4,7 @@ package controller;
 import model.Pessoa;
 import model.Residente;
 import model.Visitante;
+
 import util.Validadores;
 import java.util.ArrayList;
 import java.util.List;

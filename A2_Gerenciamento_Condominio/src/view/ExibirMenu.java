@@ -253,8 +253,10 @@ public class ExibirMenu {
                     break;
                     
                 case 4:
-                    System.out.println("Relatório de Reservas selecionado.");
-                    // Implementar lógica para Relatório de Reservas
+                    System.out.println("\nRelatório de Reservas selecionado.");
+                    System.out.println("------------------------------------");
+                    ReservaView.listarTodasReservasFeitas(reservaController);
+
                     break;
                 case 5:
                     System.out.println("\nRelatório Veiculos Selecionado.");

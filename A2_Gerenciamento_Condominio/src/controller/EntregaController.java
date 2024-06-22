@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import controller.interfaces.IEntrega;
 import model.Entrega;
 import model.Visitante;
 
-public class EntregaController {
+public class EntregaController implements IEntrega {
 
     private List<Entrega> entregas;
 

@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class PessoaController {
+import controller.interfaces.IPessoa;
+
+public class PessoaController implements IPessoa{
     private List<Residente> residentes = new ArrayList<>();
     private List<Visitante> visitantes = new ArrayList<>();
 

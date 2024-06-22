@@ -6,10 +6,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import controller.interfaces.IReserva;
 import model.Reserva;
 import model.Visitante;
 
-public class ReservaController {
+public class ReservaController implements IReserva{
     private List<Reserva> reservas;
 
     public ReservaController() {
@@ -50,10 +51,7 @@ public class ReservaController {
                        .filter(reserva -> reserva.getResidente().getCpf().equalsIgnoreCase(cpfResidente))
                        .collect(Collectors.toList());
     }
-
-    public int gerarIdReserva(){
-        return reservas.stream().mapToInt(Reserva::getId).max().orElse(0) + 1;
-    }
+    
     public List<String> listarTodasReservas() {
         return reservas.stream()
                 .sorted(Comparator.comparing(Reserva::getDataReserva))
@@ -61,5 +59,9 @@ public class ReservaController {
                                 ", Área: " + reserva.getArea() +
                                 ", Data : " + reserva.getDataReserva().toString())
                 .collect(Collectors.toList());
+    }
+
+    public int gerarIdReserva(){
+        return reservas.stream().mapToInt(Reserva::getId).max().orElse(0) + 1;
     }
 }

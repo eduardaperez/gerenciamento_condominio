@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import controller.interfaces.IAcesso;
 import model.Acesso;
 import model.Residente;
 import model.Veiculo;
 import model.Visitante;
 
-public class AcessoController {
+public class AcessoController implements IAcesso {
     private List<Acesso> acessos;
 
 

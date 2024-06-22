@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import model.Reserva;
+import model.Visitante;
 
 public class ReservaController {
     private List<Reserva> reservas;
@@ -17,7 +18,7 @@ public class ReservaController {
 
     public void adicionarReserva(Reserva reserva) {
         boolean disponivel = reservas.stream()
-            .noneMatch(r -> r.getArea().equals(reserva.getArea()) && r.getDataReserva().isEqual(reserva.getDataReserva()));
+                                     .noneMatch(r -> r.getArea().equals(reserva.getArea()) && r.getDataReserva().isEqual(reserva.getDataReserva()));
 
         if (disponivel) {
             reservas.add(reserva);
@@ -28,24 +29,28 @@ public class ReservaController {
 
     public List<String> listarDatasOcupadasPorArea(String area) {
         return reservas.stream()
-            .filter(r -> r.getArea().equalsIgnoreCase(area))
-            .sorted(Comparator.comparing(Reserva::getDataReserva))
-            .map(reserva -> reserva.getDataReserva().toString())
-            .collect(Collectors.toList());
+                       .filter(r -> r.getArea().equalsIgnoreCase(area))
+                       .sorted(Comparator.comparing(Reserva::getDataReserva))
+                       .map(reserva -> reserva.getDataReserva().toString())
+                       .collect(Collectors.toList());
     }
 
-    public boolean pesquisarPorData(LocalDate data, String area) {
+    public boolean pesquisarDisponibilidadePorData(LocalDate data, String area) {
         return reservas.stream()
-            .noneMatch(reserva -> reserva.getArea().equals(area) && reserva.getDataReserva().isEqual(data));
+                       .noneMatch(reserva -> reserva.getArea().equals(area) && reserva.getDataReserva().isEqual(data));
     }
 
     public void cancelarReserva(int id) {
         reservas.removeIf(reserva -> reserva.getId() == id);
     }
 
-    public List<Reserva> buscarReservasPorNomeResidente(String cpfResidente) {
+    public List<Reserva> buscarReservasPorNomeCpf(String cpfResidente) {
         return reservas.stream()
-            .filter(reserva -> reserva.getResidente().getCpf().equalsIgnoreCase(cpfResidente))
-            .collect(Collectors.toList());
+                       .filter(reserva -> reserva.getResidente().getCpf().equalsIgnoreCase(cpfResidente))
+                       .collect(Collectors.toList());
+    }
+
+    public int gerarIdReserva(){
+        return reservas.stream().mapToInt(Reserva::getId).max().orElse(0) + 1;
     }
 }

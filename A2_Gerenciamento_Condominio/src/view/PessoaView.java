@@ -45,7 +45,7 @@ public class PessoaView {
         int apartamento = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Data de Nascimento (dd/MM/yyyy): ");
+        System.out.print("Data de Nascimento (dd-MM-yyyy): ");
         String dataNascimentoStr = scanner.nextLine().trim();
 
         if (nome.isEmpty() || telefone.isEmpty() || cpf.isEmpty() || dataNascimentoStr.isEmpty()) {
@@ -55,7 +55,7 @@ public class PessoaView {
 
         LocalDate dataNascimento;
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             dataNascimento = LocalDate.parse(dataNascimentoStr, formatter);
         } catch (DateTimeParseException e) {
             System.out.println("Data de nascimento no formato inválido.");
@@ -64,12 +64,12 @@ public class PessoaView {
 
         Residente residente = new Residente(nome, telefone, cpf, bloco, apartamento, dataNascimento, null);
 
-        System.out.print("Possui veículo? [0 - não, 1 - sim]: ");
+        System.out.print("Possui veículo? [0 - não, 1 - sim]:\n");
         int possuiVeiculo = scanner.nextInt();
         scanner.nextLine();
 
         if (possuiVeiculo == 1) {
-            System.out.print("Veículo já está cadastrado? [0 - não, 1 - sim]: ");
+            System.out.print("Veículo já está cadastrado? [0 - não, 1 - sim]:\n");
             int veiculoCadastrado = scanner.nextInt();
             scanner.nextLine();
 

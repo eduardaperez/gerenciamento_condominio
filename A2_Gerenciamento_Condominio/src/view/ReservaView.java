@@ -58,7 +58,7 @@ public class ReservaView {
                         reservarEspaco("Quadra", residente, scanner, reservaController);
                         break;
                     case 5:
-                        cancelarReservaPorResidente(scanner, reservaController);
+                        cancelarReservaPorResidente(residente, scanner, reservaController);
                         break;
                     case 6:
                         listarDatasOcupadas(scanner, reservaController);
@@ -83,12 +83,12 @@ public class ReservaView {
             String dataHora = scanner.nextLine();
             LocalDate dataReserva = LocalDate.parse(dataHora, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
-            if (reservaController.pesquisarPorData(dataReserva, area)) {
-                Reserva reserva = new Reserva(residente, area, dataReserva);
+            if (reservaController.pesquisarDisponibilidadePorData(dataReserva, area)) {
+                Reserva reserva = new Reserva(reservaController.gerarIdReserva(), residente, area, dataReserva);
                 reservaController.adicionarReserva(reserva);
                 System.out.println("Reserva realizada com sucesso para " + area + ".");
             } else {
-                System.out.println("A área " + area + " já está reservada para esta data.");
+                System.out.println("A área " + area + " já está reservada para esta data. ");
             }
         } catch (Exception e) {
             System.out.println("Erro ao realizar a reserva: " + e.getMessage());
@@ -96,6 +96,9 @@ public class ReservaView {
     }
 
     public static void listarDatasOcupadas(Scanner scanner, ReservaController reservaController) {
+        int opcaoArea; 
+        String areaSelecionada = null;
+
         System.out.println("\n--- Listagem de Datas Ocupadas ---");
         System.out.println("Selecione a área para listar as datas ocupadas:");
         System.out.println("1. Churrasqueira");
@@ -104,26 +107,31 @@ public class ReservaView {
         System.out.println("4. Quadra");
         System.out.print("Escolha uma opção: ");
 
-        int opcaoArea = scanner.nextInt();
-        scanner.nextLine();
-
-        String areaSelecionada = null;
-        switch (opcaoArea) {
-            case 1:
-                areaSelecionada = "Churrasqueira";
-                break;
-            case 2:
-                areaSelecionada = "Salão de Festas";
-                break;
-            case 3:
-                areaSelecionada = "Piscina";
-                break;
-            case 4:
-                areaSelecionada = "Quadra";
-                break;
-            default:
-                System.out.println("Opção inválida. Voltando ao menu principal.");
-                return;
+        try {
+            opcaoArea = scanner.nextInt();
+            scanner.nextLine();
+    
+            switch (opcaoArea) {
+                case 1:
+                    areaSelecionada = "Churrasqueira";
+                    break;
+                case 2:
+                    areaSelecionada = "Salão de Festas";
+                    break;
+                case 3:
+                    areaSelecionada = "Piscina";
+                    break;
+                case 4:
+                    areaSelecionada = "Quadra";
+                    break;
+                default:
+                    System.out.println("Opção inválida. Voltando ao menu principal.");
+                    return;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
+            scanner.nextLine();
+            opcaoArea = -1;
         }
 
         List<String> datasOcupadas = reservaController.listarDatasOcupadasPorArea(areaSelecionada);
@@ -137,16 +145,13 @@ public class ReservaView {
         }
     }
 
-    public static void cancelarReservaPorResidente(Scanner scanner, ReservaController reservaController) {
-        System.out.print("Digite o CPF do residente para cancelar a reserva: ");
-        String cpfResidente = scanner.nextLine();
-
-        List<Reserva> reservasDoResidente = reservaController.buscarReservasPorNomeResidente(cpfResidente);
+    public static void cancelarReservaPorResidente(Residente residente, Scanner scanner, ReservaController reservaController) {
+        List<Reserva> reservasDoResidente = reservaController.buscarReservasPorNomeCpf(residente.getCpf());
 
         if (reservasDoResidente.isEmpty()) {
-            System.out.println("Não há reservas encontradas para o residente com CPF: " + cpfResidente);
+            System.out.println("Não há reservas encontradas para o residente com CPF: " + residente.getCpf());
         } else {
-            System.out.println("Reservas encontradas para o residente com CPF: " + cpfResidente + ":");
+            System.out.println("Reservas encontradas para o residente com CPF: " + residente.getCpf() + ":");
             for (Reserva reserva : reservasDoResidente) {
                 System.out.println("ID: " + reserva.getId() + ", Área: " + reserva.getArea() + ", Data: " + reserva.getDataReserva());
             }

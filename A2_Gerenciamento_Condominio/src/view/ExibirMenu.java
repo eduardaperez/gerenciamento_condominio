@@ -17,9 +17,9 @@ public class ExibirMenu {
         do {
             System.out.println(); // Pula linha
             System.out.println("----- Menu -----");
-            System.out.println("1. Controle de Acesso");
-            System.out.println("2. Entregas");
-            System.out.println("3. Cadastros");
+            System.out.println("1. Registros");
+            System.out.println("2. Controle de Acesso");
+            System.out.println("3. Entregas");
             System.out.println("4. Reservas");
             System.out.println("5. Relatórios");
             System.out.println("0. Sair");
@@ -27,25 +27,25 @@ public class ExibirMenu {
 
             try {
                 opcao = scanner.nextInt();
-                scanner.nextLine(); // Limpa o buffer
+                scanner.nextLine(); 
                 switch (opcao) {
                     case 0:
                         System.out.println("Saindo do sistema...");
                         break;
                     case 1:
-                        exibirMenuControleAcesso(acessoController, pessoaController, veiculoController, scanner);
+                        exibirMenuRegistros(scanner, pessoaController, veiculoController);
                         break;
                     case 2:
-                        exibirMenuEntregas(scanner);
+                        exibirMenuControleAcesso(acessoController, pessoaController, veiculoController, scanner);
                         break;
                     case 3:
-                        exibirMenuCadastros(scanner, pessoaController, veiculoController);
+                        exibirMenuEntregas(scanner);
                         break;
                     case 4:
                         ReservaView.iniciarReserva(scanner, pessoaController, reservaController);
                         break;
                     case 5:
-                        exibirMenuRelatorios(scanner, acessoController, pessoaController, veiculoController);
+                        exibirMenuRelatorios(scanner, acessoController, entregaController, pessoaController, reservaController, veiculoController);
                         break;
                     default:
                         System.out.println("Opção inválida. Por favor, escolha novamente.");
@@ -122,7 +122,7 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirMenuCadastros(Scanner scanner, PessoaController pessoaController, VeiculoController veiculoController) {
+    public static void exibirMenuRegistros(Scanner scanner, PessoaController pessoaController, VeiculoController veiculoController) {
         int opcao;
         do {
             System.out.println("\n--- Cadastros ---");
@@ -139,7 +139,7 @@ public class ExibirMenu {
                         System.out.println("\nCadastrar Pessoa Física selecionado.");
                         System.out.println("------------------------------------");
                         
-                        System.out.print("Selecione uma opção? [1 - Residente, 2 - Visitante]: ");
+                        System.out.print("Selecione uma opção? [1 - Residente, 2 - Visitante]:\n");
                         int tipoCadastro = scanner.nextInt();
                         scanner.nextLine();
 
@@ -200,7 +200,7 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirMenuRelatorios(Scanner scanner, AcessoController acessoController, PessoaController pessoaController, VeiculoController veiculoController) {
+    public static void exibirMenuRelatorios(Scanner scanner, AcessoController acessoController, EntregaController entregaController, PessoaController pessoaController, ReservaController reservaController, VeiculoController veiculoController) {
         int opcao;
         do {
             System.out.println("\n--- Relatórios ---");
@@ -216,7 +216,7 @@ public class ExibirMenu {
             switch (opcao) {
                 case 1:
                     System.out.println("Relatório de Acessos selecionado.");
-                    exibirTiposAcesso(acessoController, veiculoController, pessoaController, scanner);
+                    exibirTiposAcesso(acessoController, entregaController, veiculoController, pessoaController, reservaController, scanner);
                 break;
                 case 2:
                     System.out.println("\nRelatório de Visitantes selecionado.");
@@ -249,7 +249,7 @@ public class ExibirMenu {
                     break;
                 case 0:
                     System.out.println("Voltando ao menu principal...");
-                    exibirMenuPrincipal(scanner, null, null, null, null, null);
+                    exibirMenuPrincipal(scanner, acessoController, entregaController, pessoaController, reservaController, veiculoController);
                 break;
                 default:
                     System.out.println("Opção inválida. Por favor, escolha novamente.");
@@ -257,7 +257,7 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirTiposAcesso(AcessoController acessoController, VeiculoController veiculoController, PessoaController pessoaController, Scanner scanner) {
+    public static void exibirTiposAcesso(AcessoController acessoController, EntregaController entregaController, VeiculoController veiculoController, PessoaController pessoaController, ReservaController reservaController, Scanner scanner) {
         int opcao;
         do {
             System.out.println("\n--- Acessos ---");
@@ -293,7 +293,7 @@ public class ExibirMenu {
                 break;
                 case 0:
                     System.out.println("Voltando ao menu anterior...");
-                    exibirMenuRelatorios(scanner, acessoController, pessoaController, veiculoController);
+                    exibirMenuRelatorios(scanner, acessoController, entregaController, pessoaController, reservaController, veiculoController);
                 break;
                 default:
                     System.out.println("Opção inválida. Por favor, escolha novamente.");

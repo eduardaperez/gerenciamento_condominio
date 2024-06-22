@@ -17,7 +17,7 @@ public class VeiculoView {
         System.out.println("\n--- Cadastro de Veículo ---");
 
         System.out.print("Placa: ");
-        String placa = scan.nextLine().trim().toUpperCase();
+        String placa = scan.nextLine().trim();
 
         if (!Validadores.ValidaPlaca(placa)) {
             System.out.println("Placa no formato inválido.");

@@ -34,10 +34,8 @@ public class AcessoView {
             return;
         } 
 
-        Residente residente = null;
-
         try {
-            residente = pController.obterResidente(cpfResidente);
+            Residente residente = pController.obterResidente(cpfResidente);
             if (residente == null) {
                 System.out.println("Residente não encontrado, tente novamente");
             } else {
@@ -65,10 +63,8 @@ public class AcessoView {
             return;
         } 
 
-        Residente residente = null;
-
         try {
-            residente = pController.buscarResidentePorBlocoEApartamento(blocoResidente, aptoResidente);
+            Residente residente = pController.buscarResidentePorBlocoEApartamento(blocoResidente, aptoResidente);
             if (residente == null) {
                 System.out.println("Residente não encontrado, tente novamente");
             } else {
@@ -120,19 +116,16 @@ public class AcessoView {
             return;
         }
 
-        Veiculo veiculo = null;
-
         try {
-            veiculo = vController.obterVeiculo(placaVeiculo);
+            Veiculo veiculo = vController.obterVeiculo(placaVeiculo);
             if (veiculo == null) {
                 System.out.println("Veículo não encontrado, encaminhando para cadastro ...");
                 System.out.println(".............................");
-                VeiculoView.cadastrarVeiculo(vController, pController, scan);
+                veiculo = VeiculoView.cadastrarVeiculo(vController, scan);
                 aController.registrarEntradaVeiculo(veiculo, LocalDateTime.now());
             } else {
                 aController.registrarEntradaVeiculo(veiculo, LocalDateTime.now());
                 System.out.println("Entrada registrada com sucesso.");
-                aController.listarAcessos();
             }
         } catch (Exception e) {
             System.out.println("Ocorreu um erro ao registrar a entrada: " + e.getMessage());

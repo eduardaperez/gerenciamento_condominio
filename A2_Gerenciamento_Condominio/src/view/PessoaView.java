@@ -162,6 +162,41 @@ public class PessoaView {
         }
     }
 
+    public static void cadastrarVisitante(String nome, String telefone, int blocoVisita, int apartamentoVisita, PessoaController pController, Scanner scanner) {
+
+        if (nome.isEmpty() || telefone.isEmpty()) {
+            System.out.println("Todos os campos devem ser preenchidos.");
+            return;
+        }
+
+        Residente residente = pController.buscarResidentePorBlocoEApartamento(blocoVisita, apartamentoVisita);
+
+        if (residente == null) {
+            System.out.println("Residente não encontrado!");
+            return;
+        }
+
+        System.out.print("O residente encontrado é " + residente.getNome() + "? [0 - não, 1 - sim]: ");
+        int confirmaResidente = scanner.nextInt();
+        scanner.nextLine(); 
+
+        if (confirmaResidente == 0) {
+            System.out.println("Residente não confere com a pessoa que o visitante gostaria de visitar.");
+            return;
+        }
+
+        Visitante visitante = new Visitante(nome, telefone);
+        visitante.setResidente(residente);
+
+        visitante.setId(pController.gerarIdVisitante());
+
+        if (pController.cadastrarVisitante(visitante)) {
+            System.out.println("Visitante cadastrado com sucesso.");
+        } else {
+            System.out.println("Erro ao registrar visitante");
+        }
+    }
+
     public static void listarResidentes(PessoaController pController) {
         List<Residente> residentes = pController.listarResidentes();
 

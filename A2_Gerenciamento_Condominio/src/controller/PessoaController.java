@@ -1,12 +1,13 @@
 // src/controller/PessoaController.java
 package controller;
 
+import model.Pessoa;
 import model.Residente;
 import model.Visitante;
 import util.Validadores;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class PessoaController {
     private List<Residente> residentes = new ArrayList<>();
@@ -31,14 +32,7 @@ public class PessoaController {
                          .orElse(null);
     }
      
-    public Residente obterResidentePeloNome(String nome) {
-        for (Residente residente : residentes) {
-            if (residente.getNome().equalsIgnoreCase(nome)) {
-                return residente;
-            }
-        }
-        return null;
-    }
+    
 
     public Residente buscarResidentePorBlocoEApartamento(int bloco, int apartamento) {
         return residentes.stream()

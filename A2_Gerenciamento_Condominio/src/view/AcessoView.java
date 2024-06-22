@@ -51,14 +51,12 @@ public class AcessoView {
     public static void acessoVisitante(PessoaController pController, AcessoController aController, Scanner scan) {
 
         System.out.println("--- Acesso Visitante ---");
-        System.out.println("Nome Residente: ");
-        String nomeResidente = scan.nextLine().trim();
         System.out.println("Bloco Residente: ");
         int blocoResidente = scan.nextInt();
         System.out.println("Apartamento Residente: ");
         int aptoResidente = scan.nextInt();
 
-        if (nomeResidente.isEmpty() || blocoResidente == 0  || aptoResidente == 0) {
+        if (blocoResidente == 0  || aptoResidente == 0) {
             System.out.println("Acesso negado, insira os dados necessários.");
             return;
         } 
@@ -87,7 +85,7 @@ public class AcessoView {
                     aController.registrarEntradaVisitante(visitante, LocalDateTime.now());
                     System.out.println("Entrada registrada com sucesso.");
                 } else if (possuiCadastro ==2) {
-                    PessoaView.cadastrarVisitante(pController, scan);
+                    PessoaView.cadastrarVisitante(nome, telefone, blocoResidente, aptoResidente, pController, scan);
                     Visitante visitante = pController.obterVisitantePorNomeETelefone(nome, telefone);
                     //fazer acesso após cadastro
                     aController.registrarEntradaVisitante(visitante, LocalDateTime.now());
@@ -134,6 +132,28 @@ public class AcessoView {
 
     //Listas
 
+    // Informações de Residente
+    private static void exibirInfoResidente(Residente residente) {
+        System.out.println("Nome: " + residente.getNome() + 
+                           "\nContato: " + residente.getContato());
+    }
+
+    // Informações de Visitante
+    private static void exibirInfoVisitante(Visitante visitante, PessoaController pController) {
+        System.out.println("Nome: " + visitante.getNome() + 
+                           "\nContato: " + visitante.getContato());
+        Residente residente = pController.obterResidente(visitante.getResidente().getCpf());
+        System.out.println("Visitando: ");
+        exibirInfoResidente(residente);
+    }
+
+    // Informações de Veículo
+    private static void exibirInfoVeiculo(Veiculo veiculo) {
+        System.out.println("Placa: " + veiculo.getPlaca() + 
+                           "\nTipo: " + veiculo.getTipo() +
+                           "\nModelo: " + veiculo.getModelo());
+    }
+
     public static void exibirAcessos(AcessoController aController, VeiculoController vController, PessoaController pController) {
 
         exibirAcessosVeiculos(aController, vController);
@@ -145,16 +165,14 @@ public class AcessoView {
     public static void exibirAcessosResidentes(AcessoController aController, PessoaController pController) {
         List<Acesso> acessos = aController.listarAcessos();
 
+        System.out.println("\n -> Entrada Residente: " );
         for (Acesso a : acessos) {
             if (a.getResidente() != null) {
-                System.out.println("Entrada Residente: " );
                 System.out.println("Id: " + a.getId() + 
-                                   ", Data: " + a.getEntrada());
+                                   "\nData: " + a.getEntrada());
                 
-                Residente residente = pController.obterResidente(a.getResidente().getCpf());
-                System.out.println("Nome: " + residente.getNome() + 
-                                   ", CPF: " + residente.getCpf() +
-                                   ", Contato: " + residente.getContato());
+                System.out.println("\nDados Residente: ");
+                exibirInfoResidente(a.getResidente());
             }
         }
     }
@@ -162,20 +180,14 @@ public class AcessoView {
     public static void exibirAcessosVisitantes(AcessoController aController, PessoaController pController) {
         List<Acesso> acessos = aController.listarAcessos();
 
+        System.out.println("\n -> Entrada Visitante: " );
         for (Acesso a : acessos) {
             if (a.getVisitante() != null) {
-                System.out.println("Entrada Visitante: " );
                 System.out.println("Id: " + a.getId() + 
                                    ", Data: " + a.getEntrada());
                 
-                Visitante visitante = pController.obterVisitante(a.getVisitante().getId());
-                System.out.println("Nome: " + visitante.getNome() + 
-                                   ", Contato: " + visitante.getContato());
-                Residente residente = pController.obterResidente(visitante.getResidente().getCpf());
-                System.out.println("Visitando: ");
-                System.out.println("Nome: " + residente.getNome() + 
-                                   ", Bloco: " + residente.getBloco() +
-                                   ", Apartamento: " + residente.getApartamento());
+                System.out.println("\nDados Visitante: ");
+                exibirInfoVisitante(a.getVisitante(), pController);
             }
         }
     }
@@ -183,16 +195,14 @@ public class AcessoView {
     public static void exibirAcessosVeiculos(AcessoController aController, VeiculoController vController) {
         List<Acesso> acessos = aController.listarAcessos();
 
+        System.out.println("\n -> Entrada Veículo: " );
         for (Acesso a : acessos) {
             if (a.getVeiculo() != null) {
-                System.out.println("Entrada Veículo: " );
                 System.out.println("Id: " + a.getId() + 
                                    ", Data: " + a.getEntrada());
                 
-                Veiculo veiculo = vController.obterVeiculo(a.getVeiculo().getPlaca());
-                System.out.println("Placa: " + veiculo.getPlaca() + 
-                                   ", Tipo: " + veiculo.getTipo() +
-                                   ", Modelo: " + veiculo.getModelo());
+                System.out.println("\nDados Veículo: ");
+                exibirInfoVeiculo(a.getVeiculo());
             }
         }
     }
@@ -212,37 +222,16 @@ public class AcessoView {
 
         List<Acesso> acessos = aController.listarAcessosDia(dia);
         for (Acesso a : acessos) {
+            System.out.println("Id: " + a.getId() + ", Data: " + a.getEntrada());
             if (a.getResidente() != null) {
-                System.out.println("Entrada Residente: " );
-                System.out.println("Id: " + a.getId() + 
-                                   ", Data: " + a.getEntrada());
-                
-                Residente residente = pController.obterResidente(a.getResidente().getCpf());
-                System.out.println("Nome: " + residente.getNome() + 
-                                   ", CPF: " + residente.getCpf() +
-                                   ", Contato: " + residente.getContato());
+                System.out.println("\n -> Entrada Residente: ");
+                exibirInfoResidente(a.getResidente());
             } else if (a.getVisitante() != null) {
-                System.out.println("Entrada Visitante: " );
-                System.out.println("Id: " + a.getId() + 
-                                   ", Data: " + a.getEntrada());
-                
-                Visitante visitante = pController.obterVisitante(a.getVisitante().getId());
-                System.out.println("Nome: " + visitante.getNome() + 
-                                   ", Contato: " + visitante.getContato());
-                Residente residente = pController.obterResidente(visitante.getResidente().getCpf());
-                System.out.println("Visitando: ");
-                System.out.println("Nome: " + residente.getNome() + 
-                                   ", Bloco: " + residente.getBloco() +
-                                   ", Apartamento: " + residente.getApartamento());                
+                System.out.println("\n -> Entrada Visitante: ");
+                exibirInfoVisitante(a.getVisitante(), pController);
             } else if (a.getVeiculo() != null) {
-                System.out.println("Entrada Veículo: " );
-                System.out.println("Id: " + a.getId() + 
-                                   ", Data: " + a.getEntrada());
-                
-                Veiculo veiculo = vController.obterVeiculo(a.getVeiculo().getPlaca());
-                System.out.println("Placa: " + veiculo.getPlaca() + 
-                                   ", Tipo: " + veiculo.getTipo() +
-                                   ", Modelo: " + veiculo.getModelo());
+                System.out.println("\n -> Entrada Veículo: ");
+                exibirInfoVeiculo(a.getVeiculo());
             }
         }
     }

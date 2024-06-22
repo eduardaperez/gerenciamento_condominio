@@ -60,14 +60,3 @@ public class AcessoController {
         return acessos.stream().mapToInt(Acesso::getId).max().orElse(0) + 1;
     }
 }
-
-
-/*for (Acesso a : acessos) {
-            LocalDate dataEntrada = a.getEntrada().toLocalDate();
-
-            if (dia == dataEntrada) {
-                if (condition) {
-                    
-                }
-            }
-        } */

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import model.Entrega;
-import model.Residente;
+import model.Visitante;
 
 public class EntregaController {
 
@@ -16,12 +16,12 @@ public class EntregaController {
         this.entregas = new ArrayList<>();
     }
 
-    // Método para adicionar uma nova entrega
+    
     public void adicionarEntrega(Entrega entrega) {
         this.entregas.add(entrega);
     }
 
-   
+
     public List<Entrega> listarEntregasPorCpf(int cpf) {
         return this.entregas.stream()
             .filter(entrega -> entrega.getResidente().getClass().equals(cpf))
@@ -46,11 +46,21 @@ public class EntregaController {
             .collect(Collectors.toList());
     }
 
+    public List<Entrega> listarEntregasNaoRetiradasPorResidente(String cpf) {
+        return this.entregas.stream()
+            .filter(entrega -> !entrega.isRetirada() && entrega.getResidente().getCpf().equals(cpf))
+            .collect(Collectors.toList());
+    }
+
     
-    public List<String> listarEntregasRealizadas() {
+    public List<Entrega> listarEntregasRealizadas() {
         return this.entregas.stream()
             .filter(Entrega::isRetirada)
-            .map(entrega -> "Data: " + entrega.getDataRecebimento() + ", CPF: " + entrega.getResidente().getClass())
             .collect(Collectors.toList());
+    }
+
+    
+    public int gerarIdEntrega() {
+        return entregas.stream().mapToInt(Entrega::getId).max().orElse(0) + 1;
     }
 }

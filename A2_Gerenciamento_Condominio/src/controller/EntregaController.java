@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import model.Entrega;
-import model.Visitante;
 
 public class EntregaController {
 

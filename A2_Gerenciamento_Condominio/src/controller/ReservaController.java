@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import model.Reserva;
-import model.Visitante;
 
 public class ReservaController {
     private List<Reserva> reservas;

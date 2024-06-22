@@ -104,14 +104,107 @@ public class VeiculoView {
         return null;
     }
 
-    public static void listarVeiculos(VeiculoController pController) {
-        List<Veiculo> veiculos = pController.listarVeiculos();
+    public static void atualizarVeiculo (VeiculoController vController, Scanner scanner) {
+        System.out.println("\n--- Cadastro de Veículo ---");
+        
+        System.out.print("Placa: ");
+        String placa = scanner.nextLine().trim();
+
+        if (!Validadores.ValidaPlaca(placa)) {
+            System.out.println("Placa no formato inválido.");
+            return;
+        }
+
+        Veiculo veiculo = vController.obterVeiculo(placa);
+
+        if (veiculo == null) {
+            System.out.println("Veiculo não encontrado!");
+            return;
+        }
+
+        System.out.println("-> Veiculo encontrado \nModelo" + veiculo.getModelo() + "\nTipo:" + veiculo.getTipo());
+        System.out.println("Gostaria de atualizar o registro? [s/n]");
+        String opcao = scanner.nextLine().toUpperCase();
+
+        if (!opcao.equals("S")) {
+            System.out.println("Processo de atualização cancelado!");
+            return;
+        }
+
+        try{
+
+            System.out.println("Placa anterior:" + veiculo.getPlaca() + " \nPlaca novo: ");
+            String placaNovo = scanner.nextLine().trim();
+    
+            if (!Validadores.ValidaPlaca(placa)) {
+                System.out.println("Placa no formato inválido.");
+                return;
+            }
+    
+            System.out.println("Modelo anterior:" + veiculo.getModelo() + " \nModelo novo: ");
+            String modeloNovo = scanner.nextLine();
+    
+            System.out.println("Tipo anterior:" + veiculo.getTipo() + " \nTipo novo: ");
+            String tipoNovo = scanner.nextLine();
+    
+            // aplicar try catch
+            vController.atualizarVeiculo(veiculo, placaNovo, tipoNovo, modeloNovo);
+            System.out.println("\nAtualização concluida!");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar veiculo: " + e.getMessage());
+        }
+    }
+
+    public static void excluirVeiculo(VeiculoController vController, Scanner scanner) {
+        System.out.println("\n--- Exclusão de Veiculo ---");
+
+        System.out.print("Insira a placa do Veiculo: ");
+        String placa = scanner.nextLine().trim();
+
+        if (!Validadores.ValidaPlaca(placa)) {
+            System.out.println("Placa no formato inválido.");
+            return;
+        }
+
+        Veiculo veiculo = vController.obterVeiculo(placa);
+
+        if (veiculo == null) {
+            System.out.println("Veiculo não encontrado!");
+            return;
+        }
+
+        System.out.println("Veiculo encontrado: " + veiculo.getModelo());
+        System.out.println("Tem certeza que deseja deletar este veiculo? (s/n): ");
+        String confirmacao = scanner.nextLine().toUpperCase();
+
+        if (confirmacao.equalsIgnoreCase("S")) {
+            try {
+                System.out.println("Veiculo excluido com sucesso.");
+                vController.removerVeiculo(placa);
+            } catch (Exception e) {
+                System.out.println("Erro ao excluir Veiculo: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Operação de exclusão cancelada");
+        }
+    }
+
+    public static void listarVeiculos(VeiculoController vController) {
+        List<Veiculo> veiculos = vController.listarVeiculos();
 
         for (Veiculo v : veiculos) {
             System.out.println( "Placa: " + v.getPlaca() + 
                                 ", Tipo: " + v.getTipo() + 
                                 ", Modelo: " + v.getModelo());
         }
+    }
+
+    // Informações de Veículo
+    public static void exibirInfoVeiculo(Veiculo veiculo) {
+        System.out.println("Placa: " + veiculo.getPlaca() + 
+                            "\nTipo: " + veiculo.getTipo() +
+                            "\nModelo: " + veiculo.getModelo());
     }
 
 }

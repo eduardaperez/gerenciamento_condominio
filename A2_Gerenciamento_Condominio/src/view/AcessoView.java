@@ -130,30 +130,6 @@ public class AcessoView {
         }
     }
 
-    //Listas
-
-    // Informações de Residente
-    private static void exibirInfoResidente(Residente residente) {
-        System.out.println("Nome: " + residente.getNome() + 
-                           "\nContato: " + residente.getContato());
-    }
-
-    // Informações de Visitante
-    private static void exibirInfoVisitante(Visitante visitante, PessoaController pController) {
-        System.out.println("Nome: " + visitante.getNome() + 
-                           "\nContato: " + visitante.getContato());
-        Residente residente = pController.obterResidente(visitante.getResidente().getCpf());
-        System.out.println("Visitando: ");
-        exibirInfoResidente(residente);
-    }
-
-    // Informações de Veículo
-    private static void exibirInfoVeiculo(Veiculo veiculo) {
-        System.out.println("Placa: " + veiculo.getPlaca() + 
-                           "\nTipo: " + veiculo.getTipo() +
-                           "\nModelo: " + veiculo.getModelo());
-    }
-
     public static void exibirAcessos(AcessoController aController, VeiculoController vController, PessoaController pController) {
 
         exibirAcessosVeiculos(aController, vController);
@@ -172,7 +148,7 @@ public class AcessoView {
                                    "\nData: " + a.getEntrada());
                 
                 System.out.println("\nDados Residente: ");
-                exibirInfoResidente(a.getResidente());
+                PessoaView.exibirInfoResidente(a.getResidente());
             }
         }
     }
@@ -187,7 +163,7 @@ public class AcessoView {
                                    ", Data: " + a.getEntrada());
                 
                 System.out.println("\nDados Visitante: ");
-                exibirInfoVisitante(a.getVisitante(), pController);
+                PessoaView.exibirInfoVisitante(a.getVisitante(), pController);
             }
         }
     }
@@ -202,7 +178,7 @@ public class AcessoView {
                                    ", Data: " + a.getEntrada());
                 
                 System.out.println("\nDados Veículo: ");
-                exibirInfoVeiculo(a.getVeiculo());
+                VeiculoView.exibirInfoVeiculo(a.getVeiculo());
             }
         }
     }
@@ -225,13 +201,13 @@ public class AcessoView {
             System.out.println("Id: " + a.getId() + ", Data: " + a.getEntrada());
             if (a.getResidente() != null) {
                 System.out.println("\n -> Entrada Residente: ");
-                exibirInfoResidente(a.getResidente());
+                PessoaView.exibirInfoResidente(a.getResidente());
             } else if (a.getVisitante() != null) {
                 System.out.println("\n -> Entrada Visitante: ");
-                exibirInfoVisitante(a.getVisitante(), pController);
+                PessoaView.exibirInfoVisitante(a.getVisitante(), pController);
             } else if (a.getVeiculo() != null) {
                 System.out.println("\n -> Entrada Veículo: ");
-                exibirInfoVeiculo(a.getVeiculo());
+                VeiculoView.exibirInfoVeiculo(a.getVeiculo());
             }
         }
     }

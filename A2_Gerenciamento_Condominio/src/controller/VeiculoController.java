@@ -2,7 +2,6 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 
 import model.Veiculo;
 
@@ -28,13 +27,13 @@ public class VeiculoController {
         return new ArrayList<>(veiculos);
     }
 
-    public void atualizarVeiculo(Veiculo veiculo) {
-        veiculo.setTipo(null);
-        veiculo.setPlaca(null);
-        veiculo.setModelo(null);
+    public void atualizarVeiculo(Veiculo veiculo, String placa, String tipo, String modelo) {
+        veiculo.setPlaca(placa);
+        veiculo.setTipo(tipo);
+        veiculo.setModelo(modelo);
     }
 
     public void removerVeiculo(String placa) {
-        veiculos.removeIf(veiculo -> veiculo.getPlaca() == placa);
+        veiculos.removeIf(veiculo -> veiculo.getPlaca().equals(placa));
     }
 }

@@ -108,6 +108,119 @@ public class PessoaView {
             System.out.println("Erro ao cadastrar residente");
     }
 
+    public static void atualizaResidente(PessoaController pController, Scanner scanner){
+        System.out.println("\n--- Atualização de Residente ---");
+
+        System.out.print("Insira o cpf do Residente: ");
+        String cpf = scanner.nextLine().trim();
+
+        if (!Validadores.ValidaCpf(cpf)) {
+            System.out.println("CPF no formato inválido.");
+            return;
+        }
+
+        Residente residenteAntigo = pController.obterResidente(cpf);
+
+        if (residenteAntigo == null) {
+            System.out.println("residente não encontrado!");
+            return;
+        }
+
+        System.out.println("Residente encontrado: " + residenteAntigo.getNome());
+        System.out.print("Gostaria de atualizar o registro? [s/n]: ");
+        String opcao = scanner.nextLine().trim().toUpperCase();
+
+        if (!opcao.equals("S")) {
+            System.out.println("Processo de atualização cancelado!");
+            return;
+        }
+
+        try {
+                System.out.println("Nome cadastrado:" + residenteAntigo.getNome() + " \nNome: ");
+                String nome = scanner.nextLine();
+    
+                System.out.println("Telefone cadastrado:" + residenteAntigo.getContato() + " \nTelefone: ");
+                String telefone = scanner.nextLine().trim();
+    
+                if (!Validadores.ValidaContato(telefone)) {
+                    System.out.println("Telefone no formato inválido.");
+                    return;
+                }
+    
+                System.out.println("Bloco cadastrado:" + residenteAntigo.getBloco() + " \nBloco: ");
+                int bloco = scanner.nextInt();
+                scanner.nextLine();
+    
+                System.out.println("Apartamento cadastrado:" + residenteAntigo.getApartamento() + " \nApartamento: ");
+                int apto = scanner.nextInt();
+                scanner.nextLine();
+    
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String dataNascimentoFormatada = residenteAntigo.getDataNascimento().format(formatter);        
+                System.out.println("Data de nascimento cadastrada: " + dataNascimentoFormatada);
+                System.out.print("Nova Data de Nascimento (dd-MM-yyyy): ");
+                String dataNascimentoStr = scanner.nextLine().trim();
+    
+                LocalDate dataNascimento;
+                dataNascimento = LocalDate.parse(dataNascimentoStr, formatter);
+    
+                pController.atualizarResidente(residenteAntigo, nome, telefone, bloco, apto, dataNascimento);;
+    
+                if (residenteAntigo.getVeiculos() != null && !residenteAntigo.getVeiculos().isEmpty()) {
+                    List<Veiculo> veiculos = residenteAntigo.getVeiculos();
+                    System.out.println("Veículo(s) cadastrado(s):");
+                    veiculos.forEach(VeiculoView::exibirInfoVeiculo);
+                    System.out.println("Se quiser atualizar os dados de veículos, por favor, acione o registro de veículos.");
+                }
+                System.out.println("\nAtualização concluida!");
+            } catch (DateTimeParseException e) {
+                System.out.println("Data de nascimento no formato inválido.");
+            } catch (Exception e) {
+                System.out.println("Erro ao atualizar residente: " + e.getMessage());
+            }
+    }
+
+    public static void excluirResidente(PessoaController pController, Scanner scanner) {
+        System.out.println("\n--- Exclusão de Residente ---");
+
+        System.out.print("Insira o cpf do Residente: ");
+        String cpf = scanner.nextLine().trim();
+
+        if (!Validadores.ValidaCpf(cpf)) {
+            System.out.println("CPF no formato inválido.");
+            return;
+        }
+
+        Residente residente = pController.obterResidente(cpf);
+
+        if (residente == null) {            
+            System.out.println("Residente não encontrado");
+            return;
+        }
+
+        System.out.println("Residente encontrado: " + residente.getNome());
+        System.out.println("Tem certeza que deseja deletar este residente? (s/n): ");
+        String confirmacao = scanner.nextLine().toUpperCase();
+
+        if (confirmacao.equals("S")) {
+            try {
+                pController.removerResidente(cpf);
+                System.out.println("Residente excluído com sucesso.");
+            } catch (Exception e) {
+                System.out.println("Erro ao excluir residente: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Operação de exclusão cancelada.");
+        }
+    }
+
+    // Informações de Residente
+    public static void exibirInfoResidente(Residente residente) {
+        System.out.println("Nome: " + residente.getNome() + 
+                           "\nContato: " + residente.getContato());
+    }
+
+
     public static void cadastrarVisitante(PessoaController pController, Scanner scanner) {
         System.out.println("\n--- Cadastro de Visitante ---");
 
@@ -197,6 +310,90 @@ public class PessoaView {
         }
     }
 
+    public static void atualizaVisitante(PessoaController pController, Scanner scanner){
+        System.out.println("\n--- Atualização de Visitante ---");
+
+        System.out.print("Insira o telefone do Visitante: ");
+        String telefone = scanner.nextLine().trim();
+
+        if (!Validadores.ValidaContato(telefone)) {
+            System.out.println("Telefone no formato inválido.");
+            return;
+        }
+
+        Visitante visitanteAntigo = pController.obterVisitatePorTelefone(telefone);
+
+        if (visitanteAntigo == null) {
+            System.out.println("residente não encontrado!");
+            return;
+        }
+
+        System.out.println("Visitante encontrado: " + visitanteAntigo.getNome());
+        System.out.println("Gostaria de atualizar o registro? [s/n]");
+        String opcao = scanner.nextLine().toUpperCase();
+
+        if (!opcao.equals("S")) {
+            System.out.println("Processo de atualização cancelado!");
+            return;
+        }
+
+        try{
+            System.out.println("Nome anterior:" + visitanteAntigo.getNome() + " \nNome novo: ");
+            String nomeNovo = scanner.nextLine();
+
+            System.out.println("Telefone anterior:" + visitanteAntigo.getContato() + " \nTelefone novo: ");
+            System.out.print("Telefone: ");
+
+            String telefoneNovo = scanner.nextLine().trim();
+
+            if (!Validadores.ValidaContato(telefoneNovo)) {
+                System.out.println("Telefone no formato inválido.");
+                return;
+            }
+
+            pController.atualizarVisitante(visitanteAntigo, nomeNovo, telefoneNovo);
+            System.out.println("\nAtualização concluida!");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar visitante: " + e.getMessage());
+        }
+    };
+
+    public static void excluirVisitante(PessoaController pController, Scanner scanner) {
+        System.out.println("\n--- Exclusão de Visitante ---");
+
+        System.out.print("Insira o telefone do Visitante: ");
+        String telefone = scanner.nextLine().trim();
+
+        if (!Validadores.ValidaContato(telefone)) {
+            System.out.println("Telefone no formato inválido.");
+            return;
+        }
+
+        Visitante visitante = pController.obterVisitatePorTelefone(telefone);
+
+        if (visitante == null) {            
+            System.out.println("Visitante não encontrado");
+            return;
+        }
+
+        System.out.println("Visitante encontrado: " + visitante.getNome());
+        System.out.println("Tem certeza que deseja deletar este visitante? (s/n): ");
+        String confirmacao = scanner.nextLine().toUpperCase();
+
+
+        if (confirmacao.equals("S")) {
+            try{
+                pController.removerVisitante(visitante.getId());
+                System.out.println("Visitante excluido com sucesso.");
+            } catch (Exception e) {
+                System.out.println("Erro ao excluir residente: " + e.getMessage());
+            } 
+        } else {
+            System.out.println("Operação de exclusão cancelada.");
+        }
+    }
+
     public static void listarResidentes(PessoaController pController) {
         List<Residente> residentes = pController.listarResidentes();
 
@@ -228,8 +425,16 @@ public class PessoaView {
         for (Visitante v : visitantes) {
             System.out.println("ID: " + v.getId() + 
                                 ", Nome: " + v.getNome() + 
-                                ", Contato: " + v.getContato() + 
-                                ", Telefone: ");
+                                ", Contato: " + v.getContato());
         }
+    }
+
+    // Informações de Visitante
+    public static void exibirInfoVisitante(Visitante visitante, PessoaController pController) {
+        System.out.println("Nome: " + visitante.getNome() + 
+                            "\nContato: " + visitante.getContato());
+        Residente residente = pController.obterResidente(visitante.getResidente().getCpf());
+        System.out.println("Visitando: ");
+        exibirInfoResidente(residente);
     }
 }

@@ -125,9 +125,10 @@ public class ExibirMenu {
     public static void exibirMenuRegistros(Scanner scanner, PessoaController pessoaController, VeiculoController veiculoController) {
         int opcao;
         do {
-            System.out.println("\n--- Cadastros ---");
-            System.out.println("1. Cadastro de Pessoa Física");
-            System.out.println("2. Cadastrar Veículos");
+            System.out.println("\n--- REGISTROS ---");
+            System.out.println("1. Residente"); // cadastrar, atualizar e deletar
+            System.out.println("2. Visitante"); // cadastrar, atualizar e deletar
+            System.out.println("3. Veículo"); // cadastrar, atualizar e deletar
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
 
@@ -136,26 +137,60 @@ public class ExibirMenu {
                 scanner.nextLine(); 
                 switch (opcao) {
                     case 1:
-                        System.out.println("\nCadastrar Pessoa Física selecionado.");
+                        System.out.println("\nResidente selecionado.");
                         System.out.println("------------------------------------");
                         
-                        System.out.print("Selecione uma opção? [1 - Residente, 2 - Visitante]:\n");
-                        int tipoCadastro = scanner.nextInt();
+                        System.out.print("Selecione uma opção? [1 - Cadastrar, 2 - Atualizar, 3 - Deletar]:\n");
+                        int opcaoResidente = scanner.nextInt();
                         scanner.nextLine();
 
-                        if (tipoCadastro == 1) 
+                        if (opcaoResidente == 1) 
                             PessoaView.cadastrarResidente(pessoaController, veiculoController, scanner);
 
-                        else if (tipoCadastro == 2) 
-                            PessoaView.cadastrarVisitante(pessoaController, scanner);
+                        else if (opcaoResidente == 2)
+                            PessoaView.atualizaResidente(pessoaController, scanner);
+
+                        else if (opcaoResidente == 3) 
+                            PessoaView.excluirResidente(pessoaController, scanner);
 
                         break;
     
                     case 2:
-                        System.out.println("Cadastrar Veículo selecionado.");
+                        System.out.println("Visitante selecionado.");
                         System.out.println("------------------------------------");
-                        VeiculoView.cadastrarVeiculo(veiculoController, pessoaController, scanner);
-                        break;
+                        System.out.print("Selecione uma opção? [1 - Cadastrar, 2 - Atualizar, 3 - Deletar]:\n");
+                        int opcaoVisitante = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (opcaoVisitante == 1) 
+                            PessoaView.cadastrarVisitante(pessoaController, scanner);
+
+                        else if (opcaoVisitante == 2)
+                            PessoaView.atualizaVisitante(pessoaController, scanner);
+
+                        else if (opcaoVisitante == 3) 
+                            PessoaView.excluirVisitante(pessoaController, scanner);
+
+                        break;                        
+
+                    case 3:
+                        System.out.println("Veículo selecionado.");
+                        System.out.println("------------------------------------");
+
+                        System.out.print("Selecione uma opção? [1 - Cadastrar, 2 - Atualizar, 3 - Deletar]:\n");
+                        int opcaoVeiculo = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (opcaoVeiculo == 1) 
+                            VeiculoView.cadastrarVeiculo(veiculoController, pessoaController, scanner);
+
+                        else if (opcaoVeiculo == 2)
+                            VeiculoView.atualizarVeiculo(veiculoController, scanner);
+
+                        else if (opcaoVeiculo == 3) 
+                            VeiculoView.excluirVeiculo(veiculoController, scanner);
+
+                        break;     
                         
                     case 0:
                         System.out.println("Voltando ao menu principal...");
@@ -219,7 +254,7 @@ public class ExibirMenu {
                     exibirTiposAcesso(acessoController, entregaController, veiculoController, pessoaController, reservaController, scanner);
                 break;
                 case 2:
-                    System.out.println("\nRelatório de Visitantes selecionado.");
+                    System.out.println("\nRelatório de pessoas selecionado.");
                     System.out.println("------------------------------------");
                     System.out.println("Disponiveis: ");
                     System.out.println("\n1. Moradores Cadastrados \n2. Visitantes Cadastrados");

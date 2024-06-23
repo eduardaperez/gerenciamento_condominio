@@ -27,8 +27,27 @@ public class VeiculoView {
         System.out.print("Modelo: ");
         String modelo = scan.nextLine().trim();
 
-        System.out.print("Tipo: ");
-        String tipo = scan.nextLine().trim();
+        System.out.print("Tipo [1 - Carro, 2 - Moto]: ");
+        int opcao = scan.nextInt();
+        scan.nextLine();
+
+        String tipo = null;
+        
+        if (opcao != 1 && opcao != 2) {
+            System.out.println("Opção inválida. Digite 1 para Carro e 2 para Moto");
+            return;
+        }
+
+        switch (opcao) {
+            case 1:
+                tipo = "Carro";
+                break;
+            case 2:
+                tipo = "Moto";
+                break;
+            default:
+                break;
+        }
 
         if (placa.isEmpty() || modelo.isEmpty() || tipo.isEmpty()) {
             System.out.println("Todos os campos devem ser preenchidos.");
@@ -56,6 +75,9 @@ public class VeiculoView {
                 System.out.println("Residente não encontrado! \nPor favor, registre o residente.");
                 return;
             }
+        } else if (tipoCadastro != 1 && tipoCadastro != 2) {
+            System.out.println("Opção inválida. Digite 1 para Residente e 2 para Visitante.");
+            return;
         }
 
         try {
@@ -83,8 +105,27 @@ public class VeiculoView {
         System.out.print("Modelo: ");
         String modelo = scan.nextLine().trim();
 
-        System.out.print("Tipo: ");
-        String tipo = scan.nextLine().trim();
+        System.out.print("Tipo [1 - Carro, 2 - Moto]: ");
+        int opcao = scan.nextInt();
+        scan.nextLine();
+
+        String tipo = null;
+        
+        if (opcao != 1 && opcao != 2) {
+            System.out.println("Opção inválida. Digite 1 para Carro e 2 para Moto");
+            return null;
+            }
+
+        switch (opcao) {
+            case 1:
+                tipo = "Carro";
+                break;
+            case 2:
+                tipo = "Moto";
+                break;
+            default:
+                break;
+        }
 
         if (placa.isEmpty() || modelo.isEmpty() || tipo.isEmpty()) {
             System.out.println("Todos os campos devem ser preenchidos.");
@@ -105,7 +146,7 @@ public class VeiculoView {
     }
 
     public static void atualizarVeiculo (VeiculoController vController, Scanner scanner) {
-        System.out.println("\n--- Cadastro de Veículo ---");
+        System.out.println("\n--- Atualização de Veículo ---");
         
         System.out.print("Placa: ");
         String placa = scanner.nextLine().trim();
@@ -122,12 +163,15 @@ public class VeiculoView {
             return;
         }
 
-        System.out.println("-> Veiculo encontrado \nModelo" + veiculo.getModelo() + "\nTipo:" + veiculo.getTipo());
+        System.out.println("-> Veiculo encontrado \nModelo: " + veiculo.getModelo() + "\nTipo: " + veiculo.getTipo());
         System.out.println("Gostaria de atualizar o registro? [s/n]");
         String opcao = scanner.nextLine().toUpperCase();
 
-        if (!opcao.equals("S")) {
+        if (opcao.equalsIgnoreCase("n")) {
             System.out.println("Processo de atualização cancelado!");
+            return;
+        } else if (!opcao.equalsIgnoreCase("s") && !opcao.equalsIgnoreCase("n")) {
+            System.out.println("\nOpção inválida. Processo de atualização cancelado.\n");
             return;
         }
 
@@ -136,18 +180,38 @@ public class VeiculoView {
             System.out.println("Placa anterior:" + veiculo.getPlaca() + " \nPlaca novo: ");
             String placaNovo = scanner.nextLine().trim();
     
-            if (!Validadores.ValidaPlaca(placa)) {
+            if (!Validadores.ValidaPlaca(placaNovo)) {
                 System.out.println("Placa no formato inválido.");
                 return;
             }
     
             System.out.println("Modelo anterior:" + veiculo.getModelo() + " \nModelo novo: ");
             String modeloNovo = scanner.nextLine();
-    
+        
+            
             System.out.println("Tipo anterior:" + veiculo.getTipo() + " \nTipo novo: ");
+            System.out.print("Tipo [1 - Carro, 2 - Moto]: ");
+            int opcaoTipoNovo = scanner.nextInt();
+            scanner.nextLine();
+
             String tipoNovo = scanner.nextLine();
-    
-            // aplicar try catch
+        
+            if (opcaoTipoNovo != 1 && opcaoTipoNovo != 2) {
+                System.out.println("Opção inválida. Digite 1 para Carro e 2 para Moto");
+                return;
+            }
+
+            switch (opcaoTipoNovo) {
+                case 1:
+                    tipoNovo = "Carro";
+                break;
+                case 2:
+                    tipoNovo = "Moto";
+                break;
+                default:
+                break;
+            }
+            
             vController.atualizarVeiculo(veiculo, placaNovo, tipoNovo, modeloNovo);
             System.out.println("\nAtualização concluida!");
 
@@ -176,7 +240,7 @@ public class VeiculoView {
 
         System.out.println("Veiculo encontrado: " + veiculo.getModelo());
         System.out.println("Tem certeza que deseja deletar este veiculo? (s/n): ");
-        String confirmacao = scanner.nextLine().toUpperCase();
+        String confirmacao = scanner.nextLine();
 
         if (confirmacao.equalsIgnoreCase("S")) {
             try {

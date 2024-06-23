@@ -30,7 +30,7 @@ public class ReservaController implements IReserva{
 
     public List<String> listarDatasOcupadasPorArea(String area) {
         return reservas.stream()
-                       .filter(r -> r.getArea().equalsIgnoreCase(area))
+                       .filter(r -> r.getArea().equals(area))
                        .sorted(Comparator.comparing(Reserva::getDataReserva))
                        .map(reserva -> reserva.getDataReserva().toString())
                        .collect(Collectors.toList());
@@ -47,7 +47,7 @@ public class ReservaController implements IReserva{
 
     public List<Reserva> buscarReservasPorNomeCpf(String cpfResidente) {
         return reservas.stream()
-                       .filter(reserva -> reserva.getResidente().getCpf().equalsIgnoreCase(cpfResidente))
+                       .filter(reserva -> reserva.getResidente().getCpf().equals(cpfResidente))
                        .collect(Collectors.toList());
     }
     

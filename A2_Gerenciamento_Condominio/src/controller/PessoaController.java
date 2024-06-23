@@ -28,14 +28,12 @@ public class PessoaController implements IPessoa{
 
     public Residente obterResidente(String cpf) {
         return residentes.stream()
-                         .filter(r -> r.getCpf().equalsIgnoreCase(cpf))
+                         .filter(r -> r.getCpf().equals(cpf))
                          .findFirst()
                          .orElse(null);
     }
-     
-    
 
-    public Residente buscarResidentePorBlocoEApartamento(int bloco, int apartamento) {
+    public Residente obterResidentePorBlocoEApartamento(int bloco, int apartamento) {
         return residentes.stream()
                          .filter(r -> r.getBloco() == bloco && r.getApartamento() == apartamento)
                          .findFirst()
@@ -93,14 +91,14 @@ public class PessoaController implements IPessoa{
 
     public Visitante obterVisitantePorNomeETelefone(String nome, String telefone) {
         return visitantes.stream()
-                         .filter(v -> v.getNome().equalsIgnoreCase(nome) && v.getContato().equalsIgnoreCase(telefone))
+                         .filter(v -> v.getNome().equalsIgnoreCase(nome) && v.getContato().equals(telefone))
                          .findFirst()
                          .orElse(null);    
     }
 
     public Visitante obterVisitatePorTelefone(String telefone) {
         return visitantes.stream()
-                         .filter(v -> v.getContato().equalsIgnoreCase(telefone))
+                         .filter(v -> v.getContato().equals(telefone))
                          .findFirst()
                          .orElse(null);   
     }

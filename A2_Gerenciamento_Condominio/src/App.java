@@ -1,3 +1,15 @@
+/*Grupo dos alunos: 
+
+André Lucas Lencina Peixoto
+RGM: 33827311
+
+Camila Eduarda Dell'Antonio Perez Kozarewicz 
+RGM: 34653694
+
+João Antônio de Oliveira Armstrong 
+RGM: 34600612
+ */
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

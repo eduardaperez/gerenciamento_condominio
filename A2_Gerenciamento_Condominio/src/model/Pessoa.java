@@ -24,5 +24,5 @@ public abstract class Pessoa implements Serializable{
     public void setContato(String contato) {
         this.contato = contato;
     }
-
+    
 }

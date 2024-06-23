@@ -76,7 +76,7 @@ public class VeiculoView {
                 return;
             }
         } else if (tipoCadastro != 1 && tipoCadastro != 2) {
-            System.out.println("Opção inválida. Digite 1 para Residente e 2 para Visitante.");
+            System.out.println("Operação cancelada. Digite 1 para Residente e 2 para Visitante.");
             return;
         }
 
@@ -132,10 +132,8 @@ public class VeiculoView {
             return null;
         }
 
-        Residente residente = null;
-
         try {
-            Veiculo veiculo = new Veiculo(placa, modelo, tipo, residente);
+            Veiculo veiculo = new Veiculo(placa, modelo, tipo, null);
             vController.cadastrarVeiculo(veiculo);
             System.out.println("Veiculo cadastrado com sucesso!");
             return veiculo;

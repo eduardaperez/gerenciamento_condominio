@@ -23,18 +23,24 @@ public class EntregaView {
         int apto = scanner.nextInt();
         scanner.nextLine();
 
-        Residente destinatario = pController.obterResidentePorBlocoEApartamento(bloco, apto);
-        System.out.println("Entrega para o residente: " + destinatario.getNome() + "? [1 - sim, 2 - não]" );
-
-        int confirmaResidente = scanner.nextInt();
-
-        if (confirmaResidente == 1) {
-            System.out.println("Descrição da entrega:");
-            String descricao = scanner.nextLine();
-
-            Entrega entrega = new Entrega(eController.gerarIdEntrega(), destinatario, descricao, LocalDateTime.now());
-
-            eController.adicionarEntrega(entrega);
+        try {
+            Residente destinatario = pController.obterResidentePorBlocoEApartamento(bloco, apto);
+            System.out.println("Entrega para o residente: " + destinatario.getNome() + "? [1 - sim, 2 - não]" );
+    
+            int confirmaResidente = scanner.nextInt();
+            scanner.nextLine();
+    
+            if (confirmaResidente == 1) {
+                System.out.println("Descrição da entrega:");
+                String descricao = scanner.nextLine();
+    
+                Entrega entrega = new Entrega(eController.gerarIdEntrega(), destinatario, descricao, LocalDateTime.now());
+    
+                eController.adicionarEntrega(entrega);
+            }
+            
+        } catch (Exception e) {
+            System.out.println("ERRO AO REGISTRAR ENTREGA");
         }
     }
 

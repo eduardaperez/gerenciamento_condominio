@@ -55,6 +55,13 @@ public class Residente extends Pessoa {
     public void setVeiculos(List<Veiculo> veiculos) {
         this.veiculos = veiculos;
     }
+
+    @Override
+    public String toString() {
+        return "Residente [bloco=" + bloco + ", apartamento=" + apartamento + ", dataNascimento=" + dataNascimento
+                + ", cpf=" + cpf + ", veiculos=" + veiculos + "]";
+    }
+    
     
 }
 

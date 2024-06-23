@@ -41,6 +41,9 @@ public class Veiculo implements Serializable {
         this.residente = residente;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Veiculo [placa=" + placa + ", modelo=" + modelo + ", tipo=" + tipo + ", residente=" + residente + "]";
+    }
 
 }

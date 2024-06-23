@@ -58,6 +58,12 @@ public class Entrega implements Serializable {
         this.retirada = retirada;
     }
 
+    @Override
+    public String toString() {
+        return "Entrega [id=" + id + ", residente=" + residente + ", descricao=" + descricao + ", dataRecebimento="
+                + dataRecebimento + ", retirada=" + retirada + "]";
+    }
+
     
 }
 

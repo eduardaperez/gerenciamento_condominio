@@ -50,9 +50,8 @@ public class VeiculoController implements IVeiculo{
     
     public void removerVeiculo(String placa) throws Exception {
         veiculos.removeIf(veiculo -> veiculo.getPlaca().equals(placa));
-        Veiculo veiculo = obterVeiculo(placa);
 
-        Log.gravar("Remoção do veiculo de placa " + veiculo.getPlaca());
+        Log.gravar("Remoção do veiculo de placa " + placa);
         salvarDados();
     }
 

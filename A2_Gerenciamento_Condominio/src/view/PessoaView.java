@@ -67,7 +67,7 @@ public class PessoaView {
         Residente residente = new Residente(nome, telefone, cpf, bloco, apartamento, dataNascimento, null);
         
         if(pController.cadastrarResidente(residente))
-            System.out.println("Residente cadastrado com sucesso.");
+        System.out.println("Residente cadastrado com sucesso.");
         else
             System.out.println("Erro ao cadastrar residente");
             
@@ -106,6 +106,9 @@ public class PessoaView {
                 
             } else if (veiculoCadastrado == 0) {
                 Veiculo veiculo = VeiculoView.cadastrarVeiculo(vController, scanner);
+                residente.setVeiculos(List.of(veiculo));
+                veiculo.setResidente(residente);
+
                 if (veiculo != null) {
                     residente.setVeiculos(List.of(veiculo));
                     System.out.println("Veículo vinculado ao residente com sucesso!");
@@ -209,7 +212,7 @@ public class PessoaView {
         System.out.println("Tem certeza que deseja deletar este residente? (s/n): ");
         String confirmacao = scanner.nextLine().toUpperCase();
 
-        if (confirmacao.equals("S")) {
+        if (confirmacao.equalsIgnoreCase("S")) {
             try {
                 pController.removerResidente(cpf);
                 System.out.println("Residente excluído com sucesso.");

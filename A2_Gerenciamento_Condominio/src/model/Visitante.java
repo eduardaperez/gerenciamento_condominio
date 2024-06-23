@@ -32,5 +32,9 @@ public class Visitante extends Pessoa {
     }
 
 
+    @Override
+    public String toString() {
+        return "Visitante [id=" + id + ", residente=" + residente + "]";
+    }
 }
 

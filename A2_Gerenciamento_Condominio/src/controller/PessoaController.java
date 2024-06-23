@@ -33,6 +33,7 @@ public class PessoaController implements IPessoa{
         if (obterResidente(residente.getCpf()) != null) {
             String mensagem = "Residente já está cadastrado com este CPF.";
             System.out.println(mensagem);
+            return false;
         }
 
         residentes.add(residente);
@@ -73,10 +74,11 @@ public class PessoaController implements IPessoa{
     }
 
     public void removerResidente(String cpf) throws Exception {
+        String strNome = obterResidente(cpf).getNome();
+        String strTelefone = obterResidente(cpf).getContato();
         residentes.removeIf(residente -> residente.getCpf().equals(cpf));
-        Residente residente = obterResidente(cpf);
 
-        Log.gravar("Exclusão para o residente de nome " + residente.getNome() + " e telefone: " + residente.getContato());
+        Log.gravar("Exclusão para o residente de CPF " + strNome + " e telefone " + strTelefone);
         salvarDadosResidente();
     }
 
@@ -118,10 +120,11 @@ public class PessoaController implements IPessoa{
     }
 
     public void removerVisitante(int id) throws Exception {
+        String strNome = obterVisitante(id).getNome();
+        String strTelefone = obterVisitante(id).getContato();
         visitantes.removeIf(visitante -> visitante.getId() == id);
-        Visitante visitante = obterVisitante(id);
 
-        Log.gravar("Atualização para o visitante de nome " + visitante.getNome() + " e telefone: " + visitante.getContato());
+        Log.gravar("Atualização para o visitante de nome " + strNome + " e telefone: " + strTelefone);
         salvarDadosVisitante();
     }
 

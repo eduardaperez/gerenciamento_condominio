@@ -57,4 +57,12 @@ public class Acesso implements Serializable{
     public void setEntrada(LocalDateTime entrada) {
         this.entrada = entrada;
     }
+
+    @Override
+    public String toString() {
+        return "Acesso [id=" + id + ", residente=" + residente + ", visitante=" + visitante + ", veiculo=" + veiculo
+                + ", entrada=" + entrada + "]";
+    }
+
+    
 }

@@ -46,4 +46,13 @@ public class Reserva implements Serializable{
     public void setDataReserva(LocalDate dataReserva) {
         this.dataReserva = dataReserva;
     }
+
+
+    @Override
+    public String toString() {
+        return "Reserva [id=" + id + ", residente=" + residente + ", area=" + area + ", dataReserva=" + dataReserva
+                + "]";
+    }
+
+    
 }

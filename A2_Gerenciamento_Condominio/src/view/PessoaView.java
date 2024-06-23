@@ -17,7 +17,7 @@ import controller.VeiculoController;
 
 public class PessoaView {
 
-    public static void cadastrarResidente(PessoaController pController, VeiculoController vController, Scanner scanner) {
+    public static void cadastrarResidente(PessoaController pController, VeiculoController vController, Scanner scanner) throws Exception {
         System.out.println("\n--- Cadastro de Residente ---");
 
         System.out.print("Nome: ");
@@ -228,7 +228,7 @@ public class PessoaView {
     }
 
 
-    public static void cadastrarVisitante(PessoaController pController, Scanner scanner) {
+    public static void cadastrarVisitante(PessoaController pController, Scanner scanner) throws Exception {
         System.out.println("\n--- Cadastro de Visitante ---");
 
         System.out.print("Nome: ");
@@ -288,7 +288,7 @@ public class PessoaView {
         }
     }
 
-    public static void cadastrarVisitante(String nome, String telefone, int blocoVisita, int apartamentoVisita, PessoaController pController, Scanner scanner) {
+    public static void cadastrarVisitante(String nome, String telefone, int blocoVisita, int apartamentoVisita, PessoaController pController, Scanner scanner) throws Exception {
 
         if (nome.isEmpty() || telefone.isEmpty()) {
             System.out.println("Todos os campos devem ser preenchidos.");
@@ -368,7 +368,7 @@ public class PessoaView {
         }
     };
 
-    public static void excluirVisitante(PessoaController pController, Scanner scanner) {
+    public static void excluirVisitante(PessoaController pController, Scanner scanner) throws Exception {
         System.out.println("\n--- Exclusão de Visitante ---");
 
         System.out.print("Insira o telefone do Visitante: ");
@@ -396,7 +396,9 @@ public class PessoaView {
                 pController.removerVisitante(visitante.getId());
                 System.out.println("Visitante excluido com sucesso.");
             } catch (Exception e) {
-                System.out.println("Erro ao excluir residente: " + e.getMessage());
+                String mensagem = "Erro ao excluir visitante: " + e.getMessage();
+                System.out.println(mensagem);
+                Log.gravar(mensagem);
             } 
         } else {
             System.out.println("Operação de exclusão cancelada.");

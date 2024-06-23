@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Acesso {
+public class Acesso implements Serializable{
     private int id;
     private Residente residente;
     private Visitante visitante;

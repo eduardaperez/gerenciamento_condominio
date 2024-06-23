@@ -11,7 +11,7 @@ import controller.VeiculoController;
 
 public class ExibirMenu {
 
-    public static void exibirMenuPrincipal(Scanner scanner, AcessoController acessoController, EntregaController entregaController, PessoaController pessoaController, ReservaController reservaController, VeiculoController veiculoController) {
+    public static void exibirMenuPrincipal(Scanner scanner, AcessoController acessoController, EntregaController entregaController, PessoaController pessoaController, ReservaController reservaController, VeiculoController veiculoController) throws Exception {
         int opcao;
 
         do {
@@ -94,7 +94,7 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirMenuEntregas(Scanner scanner, EntregaController entregaController, PessoaController pessoaController) {
+    public static void exibirMenuEntregas(Scanner scanner, EntregaController entregaController, PessoaController pessoaController) throws Exception {
         int opcao;
         do {
             System.out.println("\n--- Entregas ---");
@@ -122,7 +122,7 @@ public class ExibirMenu {
         } while (opcao != 0);
     }
 
-    public static void exibirMenuRegistros(Scanner scanner, PessoaController pessoaController, VeiculoController veiculoController) {
+    public static void exibirMenuRegistros(Scanner scanner, PessoaController pessoaController, VeiculoController veiculoController) throws Exception {
         int opcao;
         do {
             System.out.println("\n--- REGISTROS ---");

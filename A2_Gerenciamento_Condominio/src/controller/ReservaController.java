@@ -1,23 +1,30 @@
 package controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import controller.interfaces.IReserva;
 import model.Reserva;
+import util.Log;
+import util.Ser;
 
 public class ReservaController implements IReserva{
     private List<Reserva> reservas;
 
-    public ReservaController() {
-        this.reservas = new ArrayList<>();
+    public ReservaController(List<Reserva> reservas) {
+        this.reservas = reservas;
+
+        try {
+            carregarDados();
+        } catch (Exception e) {
+            System.err.println("ERRO AO CARREGAR DADOS DE RESERVAS");
+        }
     }
     
 
-    public void adicionarReserva(Reserva reserva) {
+    public void adicionarReserva(Reserva reserva) throws Exception {
         boolean disponivel = reservas.stream()
                                      .noneMatch(r -> r.getArea().equals(reserva.getArea()) && r.getDataReserva().isEqual(reserva.getDataReserva()));
 
@@ -26,6 +33,9 @@ public class ReservaController implements IReserva{
         } else {
             throw new IllegalArgumentException("A área já está reservada para esta data.");
         }
+
+        Log.gravar("Reserva realizada para a area " + reserva.getArea());
+        salvarDados();
     }
 
     public List<String> listarDatasOcupadasPorArea(String area) {
@@ -41,8 +51,11 @@ public class ReservaController implements IReserva{
                        .noneMatch(reserva -> reserva.getArea().equals(area) && reserva.getDataReserva().isEqual(data));
     }
 
-    public void cancelarReserva(int id) {
+    public void cancelarReserva(int id) throws Exception {
         reservas.removeIf(reserva -> reserva.getId() == id);
+
+        Log.gravar("Reserva cancelada");
+        salvarDados();
     }
 
     public List<Reserva> buscarReservasPorNomeCpf(String cpfResidente) {
@@ -62,5 +75,14 @@ public class ReservaController implements IReserva{
 
     public int gerarIdReserva(){
         return reservas.stream().mapToInt(Reserva::getId).max().orElse(0) + 1;
+    }
+
+    
+    public void salvarDados() throws Exception {
+        Ser.salvarReserva(reservas);
+    }
+
+    private void carregarDados() throws Exception {
+        reservas = Ser.lerReservas();
     }
 }

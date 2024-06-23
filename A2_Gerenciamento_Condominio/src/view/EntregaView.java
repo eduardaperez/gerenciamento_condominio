@@ -13,7 +13,7 @@ import util.Validadores;
 public class EntregaView {
     
     // Método para exibir os detalhes de uma entrega
-    public static void registrarEntrega(EntregaController eController, PessoaController pController, Scanner scanner) {
+    public static void registrarEntrega(EntregaController eController, PessoaController pController, Scanner scanner) throws Exception {
         System.out.println("\n--- Registro de entrega  ---");
 
         System.out.print("Insira o endereço para entrega \nBloco:");

@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class ReservaView {
 
-    public static void iniciarReserva(Scanner scanner, PessoaController pessoaController, ReservaController reservaController) {
+    public static void iniciarReserva(Scanner scanner, PessoaController pessoaController, ReservaController reservaController) throws Exception {
         System.out.println("--- Reserva de Espaços Comuns ---");
         System.out.print("Digite o seu CPF: ");
         String cpfResidente = scanner.nextLine();
@@ -27,7 +27,7 @@ public class ReservaView {
         }
     }
 
-    public static void exibirMenuReservas(Residente residente, Scanner scanner, ReservaController reservaController) {
+    public static void exibirMenuReservas(Residente residente, Scanner scanner, ReservaController reservaController) throws Exception {
         int opcao;
 
         do {
@@ -149,7 +149,7 @@ public class ReservaView {
         }
     }
 
-    public static void cancelarReservaPorResidente(Residente residente, Scanner scanner, ReservaController reservaController) {
+    public static void cancelarReservaPorResidente(Residente residente, Scanner scanner, ReservaController reservaController) throws Exception {
         List<Reserva> reservasDoResidente = reservaController.buscarReservasPorNomeCpf(residente.getCpf());
 
         if (reservasDoResidente.isEmpty()) {

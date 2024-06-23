@@ -1,24 +1,34 @@
 package controller;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import controller.interfaces.IEntrega;
 import model.Entrega;
+import model.Residente;
+import util.Log;
+import util.Ser;
 
 public class EntregaController implements IEntrega {
 
     private List<Entrega> entregas;
 
-    public EntregaController() {
-        this.entregas = new ArrayList<>();
+    public EntregaController(List<Entrega> entregas) {
+        this.entregas = entregas;
+        try {
+            carregarDados();
+        } catch (Exception e) {
+            System.err.println("ERRO AO CARREGAR DADOS DE ENTREGAS");
+        }
     }
 
     
-    public void adicionarEntrega(Entrega entrega) {
+    public void adicionarEntrega(Entrega entrega) throws Exception {
         this.entregas.add(entrega);
+
+        Log.gravar("Entrega recebida para o residente " + entrega.getResidente().getNome());
+        salvarDados();
     }
 
 
@@ -62,5 +72,14 @@ public class EntregaController implements IEntrega {
     
     public int gerarIdEntrega() {
         return entregas.stream().mapToInt(Entrega::getId).max().orElse(0) + 1;
+    }
+
+    
+    public void salvarDados() throws Exception {
+        Ser.salvarEntrega(entregas);;
+    }
+
+    private void carregarDados() throws Exception {
+        entregas = Ser.lerEntregas();
     }
 }

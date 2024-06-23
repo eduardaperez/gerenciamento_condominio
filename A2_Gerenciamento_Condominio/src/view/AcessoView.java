@@ -62,7 +62,7 @@ public class AcessoView {
         } 
 
         try {
-            Residente residente = pController.buscarResidentePorBlocoEApartamento(blocoResidente, aptoResidente);
+            Residente residente = pController.obterResidentePorBlocoEApartamento(blocoResidente, aptoResidente);
             if (residente == null) {
                 System.out.println("Residente não encontrado, tente novamente");
             } else {
@@ -72,6 +72,7 @@ public class AcessoView {
 
                 System.out.print("Nome: ");
                 String nome = scan.nextLine().trim();
+                scan.nextLine();
 
                 System.out.print("Telefone: ");
                 String telefone = scan.nextLine().trim();
@@ -88,6 +89,7 @@ public class AcessoView {
                     PessoaView.cadastrarVisitante(nome, telefone, blocoResidente, aptoResidente, pController, scan);
                     Visitante visitante = pController.obterVisitantePorNomeETelefone(nome, telefone);
                     //fazer acesso após cadastro
+                    
                     aController.registrarEntradaVisitante(visitante, LocalDateTime.now());
                     System.out.println("Entrada registrada com sucesso.");
                 }
@@ -184,12 +186,12 @@ public class AcessoView {
     }
 
     public static void exibirAcessosDia(AcessoController aController, PessoaController pController, VeiculoController vController, Scanner scan) {
-        System.out.println("Data solicitada (dd/mm/yyyy): ");
+        System.out.println("Data solicitada (dd-mm-yyyy): ");
         String diaStr = scan.nextLine().trim();
 
         LocalDate dia;
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
             dia = LocalDate.parse(diaStr, formatter);
         } catch (DateTimeParseException e) {
             System.out.println("Data no formato inválido.");

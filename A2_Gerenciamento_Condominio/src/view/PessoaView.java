@@ -24,18 +24,20 @@ public class PessoaView {
         String nome = scanner.nextLine().trim();
 
         System.out.print("Telefone: ");
-        String telefone = scanner.nextLine().trim();
+        String telefone = scanner.nextLine();
         if (!Validadores.ValidaContato(telefone)) {
             System.out.println("Telefone no formato inválido.");
             return;
         }
+        telefone = telefone.trim().replace("(", "").replace(")", "").replace("-", "").replace(" ", "");
 
         System.out.print("Cpf: ");
-        String cpf = scanner.nextLine().trim();
+        String cpf = scanner.nextLine();
         if (!Validadores.ValidaCpf(cpf)) {
             System.out.println("CPF no formato inválido.");
             return;
         }
+        cpf = cpf.trim().replace(".", "").replace("-", "").replace(" ", "");
 
         System.out.print("Bloco: ");
         int bloco = scanner.nextInt();
@@ -63,10 +65,19 @@ public class PessoaView {
         }
 
         Residente residente = new Residente(nome, telefone, cpf, bloco, apartamento, dataNascimento, null);
-
+        
+        if(pController.cadastrarResidente(residente))
+            System.out.println("Residente cadastrado com sucesso.");
+        else
+            System.out.println("Erro ao cadastrar residente");
+            
         System.out.print("Possui veículo? [0 - não, 1 - sim]:\n");
         int possuiVeiculo = scanner.nextInt();
         scanner.nextLine();
+
+        if (possuiVeiculo != 1 && possuiVeiculo != 2) {
+            System.out.println("Opção inválida. Nenhum veículo cadastrado.");
+        }
 
         if (possuiVeiculo == 1) {
             System.out.print("Veículo já está cadastrado? [0 - não, 1 - sim]:\n");
@@ -102,10 +113,6 @@ public class PessoaView {
             }
         }
 
-        if(pController.cadastrarResidente(residente))
-            System.out.println("Residente cadastrado com sucesso.");
-        else
-            System.out.println("Erro ao cadastrar residente");
     }
 
     public static void atualizaResidente(PessoaController pController, Scanner scanner){
@@ -228,16 +235,19 @@ public class PessoaView {
         String nome = scanner.nextLine().trim();
         
         System.out.print("Telefone: ");
-        String telefone = scanner.nextLine().trim();
+        String telefone = scanner.nextLine();
         if (!Validadores.ValidaContato(telefone)) {
             System.out.println("Telefone no formato inválido.");
             return;
         }
+        telefone = telefone.trim().replace("(", "").replace(")", "").replace("-", "").replace(" ", "");
+
 
         if (nome.isEmpty() || telefone.isEmpty()) {
             System.out.println("Todos os campos devem ser preenchidos.");
             return;
         }
+        
 
         System.out.print("Está visitando o bloco: ");
         int blocoVisita = scanner.nextInt();
@@ -247,7 +257,7 @@ public class PessoaView {
         int apartamentoVisita = scanner.nextInt();
         scanner.nextLine();
 
-        Residente residente = pController.buscarResidentePorBlocoEApartamento(blocoVisita, apartamentoVisita);
+        Residente residente = pController.obterResidentePorBlocoEApartamento(blocoVisita, apartamentoVisita);
 
         if (residente == null) {
             System.out.println("Residente não encontrado!");
@@ -260,6 +270,9 @@ public class PessoaView {
 
         if (confirmaResidente == 0) {
             System.out.println("Residente não confere com a pessoa que o visitante gostaria de visitar.");
+            return;
+        } else if (confirmaResidente != 1) {
+            System.out.println("Opção inválida.");
             return;
         }
 
@@ -282,21 +295,15 @@ public class PessoaView {
             return;
         }
 
-        Residente residente = pController.buscarResidentePorBlocoEApartamento(blocoVisita, apartamentoVisita);
+        Residente residente = pController.obterResidentePorBlocoEApartamento(blocoVisita, apartamentoVisita);
 
         if (residente == null) {
             System.out.println("Residente não encontrado!");
             return;
         }
 
-        System.out.print("O residente encontrado é " + residente.getNome() + "? [0 - não, 1 - sim]: ");
-        int confirmaResidente = scanner.nextInt();
-        scanner.nextLine(); 
+        System.out.print("Visitante vinculado ao residente " + residente.getNome() + "\n");
 
-        if (confirmaResidente == 0) {
-            System.out.println("Residente não confere com a pessoa que o visitante gostaria de visitar.");
-            return;
-        }
 
         Visitante visitante = new Visitante(nome, telefone);
         visitante.setResidente(residente);
@@ -314,7 +321,9 @@ public class PessoaView {
         System.out.println("\n--- Atualização de Visitante ---");
 
         System.out.print("Insira o telefone do Visitante: ");
-        String telefone = scanner.nextLine().trim();
+        String telefone = scanner.nextLine();
+        telefone = telefone.trim().replace("(", "").replace(")", "").replace("-", "").replace(" ", "");
+
 
         if (!Validadores.ValidaContato(telefone)) {
             System.out.println("Telefone no formato inválido.");
@@ -324,7 +333,7 @@ public class PessoaView {
         Visitante visitanteAntigo = pController.obterVisitatePorTelefone(telefone);
 
         if (visitanteAntigo == null) {
-            System.out.println("residente não encontrado!");
+            System.out.println("Visitnte não encontrado!");
             return;
         }
 

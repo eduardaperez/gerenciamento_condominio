@@ -40,7 +40,7 @@ public class EntregaController implements IEntrega {
     }
 
     
-    public List<Entrega> listarEntregasNaoRetiradas() {
+    public List<Entrega> listarTodasEntregasNaoRetiradas() {
         return this.entregas.stream()
             .filter(entrega -> !entrega.isRetirada())
             .collect(Collectors.toList());

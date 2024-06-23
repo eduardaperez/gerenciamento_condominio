@@ -23,7 +23,7 @@ public class EntregaView {
         int apto = scanner.nextInt();
         scanner.nextLine();
 
-        Residente destinatario = pController.buscarResidentePorBlocoEApartamento(bloco, apto);
+        Residente destinatario = pController.obterResidentePorBlocoEApartamento(bloco, apto);
         System.out.println("Entrega para o residente: " + destinatario.getNome() + "? [1 - sim, 2 - não]" );
 
         int confirmaResidente = scanner.nextInt();
@@ -78,8 +78,8 @@ public class EntregaView {
         
     }
 
-    public static void exibirlistarEntregasNaoRetiradas(EntregaController eController) { 
-        List<Entrega> entregasNaoRetiradas = eController.listarEntregasNaoRetiradas();
+    public static void exibirlistarTodasEntregasNaoRetiradas(EntregaController eController) { 
+        List<Entrega> entregasNaoRetiradas = eController.listarTodasEntregasNaoRetiradas();
 
         if (entregasNaoRetiradas.size() == 0)
             System.out.println("Não há dados de entregas não retiradas"); 

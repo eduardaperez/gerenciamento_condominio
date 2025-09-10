@@ -23,3 +23,10 @@ Este projeto foi desenvolvido em grupo para a disciplina de Programação Orient
 
    ```bash
    git clone https://github.com/eduardaperez/gerenciamento_condominio.git
+
+2. Navegue até o diretório do projeto:
+
+   ```bash
+   cd gerenciamento_condominio
+
+3. Compile e execute o projeto utilizando sua IDE preferida ou via linha de comando.
